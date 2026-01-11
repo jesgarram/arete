@@ -1,59 +1,14 @@
 # Arete
 
-*Arete (ἀρετή): excellence that cannot be given, only earned through effort.*
+*ἀρετή — excellence earned through effort, not given.*
 
-A brainstorming framework for Claude Code that challenges you instead of agreeing with you.
+A brainstorming framework for Claude Code that argues back.
 
-## Why This Exists
+## The Problem
 
-AI gives you the illusion of understanding. You prompt, it answers, you ship. But did you actually think it through, or did you just technically not be wrong?
+You ask. It answers. You ship. Then the system breaks at 3 AM and you realize you never understood why you chose a jumphost over Private Endpoints—you just accepted a suggestion.
 
-Arete exists because:
-
-**You should own your decisions.** When the system fails at 3 AM, you need to know *why* you chose WebSockets over polling—not just that Claude suggested it. ADRs capture the reasoning you earned through dialogue, not answers you received.
-
-**Challenge creates growth.** A tool that always agrees with you is a mirror, not a mentor. Arete pushes back: "Why a jumphost?" "What are you protecting against?" "Who handles the key rotation?" The friction is the feature.
-
-**Context compounds.** Session 10 builds on session 1. Your ADRs accumulate into a searchable decision history. New team members read *why* the event system uses polling—they don't interrupt you, they don't reverse-engineer the code. Past decisions surface when relevant because the files remember what you forget.
-
-## Installation
-
-Requires [Claude Code](https://claude.ai/code).
-
-### Via Plugin Marketplace (Recommended)
-
-Register the Arete marketplace:
-
-```bash
-/plugin marketplace add jesgarram/arete
-```
-
-Then install the plugin:
-
-```bash
-/plugin install arete@jesgarram/arete
-```
-
-### Manual Installation
-
-Download and install manually:
-
-```bash
-git clone https://github.com/jesgarram/arete.git
-cp -r arete ~/.claude/plugins/arete
-```
-
-After installation, restart Claude Code or run `/plugins reload` to activate the plugin.
-
-## Quickstart
-
-```bash
-/brainstorm "Design a real-time notification system for 100K concurrent users"
-```
-
-Claude guides you through DIVERGE → CONVERGE → REFINE → EXPORT. You get an ADR in `context/exports/`.
-
-## How It Works
+Arete asks questions:
 
 ```
 Arete: "Why a jumphost?"
@@ -66,96 +21,115 @@ Arete: "Who manages the patching? The key rotation?"
 You:   ...I didn't think about that.
 ```
 
-That moment—when you stop prompting and start thinking—is the point.
+That pause is the point.
 
-### The Workflow
+## The Workflow
 
+```mermaid
+flowchart TB
+    subgraph input[" "]
+        PROBLEM["Your Problem"]
+    end
+
+    subgraph phases["Brainstorm Phases"]
+        direction LR
+        DIVERGE["DIVERGE<br/><i>System 1</i><br/>Explore widely"]
+        CONVERGE["CONVERGE<br/><i>System 2</i><br/>Force decision"]
+        REFINE["REFINE<br/><i>System 2</i><br/>Stress-test"]
+        EXPORT["EXPORT<br/>Save artifact"]
+        
+        DIVERGE --> CONVERGE --> REFINE --> EXPORT
+    end
+
+    subgraph domains["Domain Knowledge"]
+        direction TB
+        TECHNICAL["Technical<br/>distributed systems, storage,<br/>data models, partitioning"]
+        CONCEPTUAL["Conceptual<br/>presentations, writing,<br/>talks, teaching"]
+    end
+
+    subgraph output[" "]
+        ADR["ADR + Diagrams"]
+    end
+
+    PROBLEM --> DIVERGE
+    TECHNICAL -.->|questions| DIVERGE
+    TECHNICAL -.->|questions| REFINE
+    CONCEPTUAL -.->|questions| DIVERGE
+    CONCEPTUAL -.->|questions| REFINE
+    EXPORT --> ADR
 ```
-DIVERGE  →  CONVERGE  →  REFINE  →  EXPORT
-(explore)   (decide)     (stress)   (save)
+
+## Getting Started
+
+```bash
+/plugin marketplace add jesgarram/arete
+/plugin install arete@jesgarram/arete
 ```
 
-**DIVERGE** — Explore widely. Zero judgment. Claude asks probing questions (80% questions, 20% statements). Generate 5+ directions before evaluating any.
+Start a session:
 
-**CONVERGE** — Force a decision. Claude extracts 3-5 approaches, presents a matrix showing what each sacrifices. You pick one path with explicit trade-off acceptance.
-
-**REFINE** — Stress-test. "What at 10x scale?" "How debug at 3 AM?" "Single point of failure?" Simple (can 10 steps be 3?), Robust (what when this fails?), Elegant (does it feel inevitable?).
-
-**EXPORT** — Save the artifact. Technical problems become ADRs. Conceptual problems become Outlines. Architecture diagrams auto-generated via mermaid.
+```bash
+/arete:brainstorm "Secure access to a production database in a private VNet"
+```
 
 ## Output
 
-ADRs include searchable frontmatter:
+Sessions become Architecture Decision Records in `context/exports/`:
 
 ```yaml
 ---
-problem: "Real-time notifications at 100K concurrent users"
+problem: "Secure access to production database in private VNet"
+decision: "Private Endpoints with AAD authentication, no jumphost"
 date: 2025-01-11
 ---
 ```
 
-Six months later, search your ADRs to find every decision about message distribution.
+Six months later, search your ADRs. Find every decision about network access patterns. New engineers read *why* things work the way they do.
 
-When you discuss component interactions, mermaid diagrams generate inline:
+When you discuss component interactions, Mermaid diagrams generate inline:
 
 ```mermaid
 flowchart LR
-    A[API Gateway] --> B[WebSocket Server]
-    B --> C[Redis Pub/Sub]
-    C --> D[Notification Workers]
+    A[Developer] --> B[AAD Auth]
+    B --> C[Private Endpoint]
+    C --> D[Azure SQL]
 ```
 
-## Skills
+## Domains
 
-The Arete plugin includes four core skills:
+Arete loads questions matched to your problem.
 
-- **diverge** - Divergent thinking phase for exploration
-- **converge** - Convergent thinking phase for decision making
-- **refine** - Refinement phase for stress-testing and polishing
-- **export** - Generate ADRs and outlines with architecture diagrams
+**Technical** — distributed systems, storage patterns, data models, batch/stream processing, partitioning
 
-Access via the `/brainstorm` command, which orchestrates all phases.
+**Conceptual** — presentations, technical writing, talks, teaching
 
-## Domain Knowledge
-
-Arete loads domain-specific questions for:
-
-**Technical domains:**
-- Distributed Systems (CAP theorem, consistency, replication)
-- Storage & Retrieval (OLTP vs OLAP, indexes, query patterns)
-- Data Models (relational, document, graph, schema evolution)
-- Batch & Stream Processing (lambda architecture, exactly-once)
-- Partitioning (hot spots, rebalancing strategies)
-
-**Conceptual domains:**
-- Presentations (slide design, narrative arc, visual storytelling)
-- Writing (technical writing, structure, clarity)
-- Talks (stage presence, timing, audience interaction)
-- Teaching (pedagogy, examples, learning progression)
-
-## Customization
-
-Add your own domain by creating a markdown file in:
-- `skills/diverge/reference/technical/your-domain.md` (technical)
-- `skills/diverge/reference/conceptual/your-domain.md` (conceptual)
-
-Structure:
+Add your own in `skills/diverge/reference/`:
 
 ```markdown
 # Your Domain
 
 ## Key Concepts
-
-[The fundamental trade-off or tension in this domain]
+The fundamental trade-off in this domain.
 
 ## Questions
-
 - Question that reveals hidden assumptions
 - Question about failure modes
 - Question about scale implications
-- Question about trade-offs
 ```
 
-## License
+## Why It Works
 
-MIT
+**[System 1 and System 2](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow)**: Fast and slow thinking. Vibe coding traps you in System 1: no friction, just pattern-matching. Spec-driven tools trap you in System 2: ten pages of requirements, zero momentum. You need both. DIVERGE/CONVERGE/REFINE forces the switch.
+
+**[Flow](https://en.wikipedia.org/wiki/Flow_(psychology))**: Challenge slightly exceeds skill. Too easy, you drift. Too hard, you quit. The questions calibrate difficulty.
+
+**[Zone of Proximal Development](https://en.wikipedia.org/wiki/Zone_of_proximal_development)**: The band just past what you can do alone. Close enough to reach, far enough to stretch. Teachers know it. Coaches know it. Most AI tools ignore it. Arete doesn't agree with you—it asks the next question.
+
+## Contributing
+
+1. Fork the repo
+2. Create a branch (`git checkout -b my-domain`)
+3. Add your changes
+4. Open a PR
+
+New domains sharpen the challenge. The more specific the questions, the harder it is to coast.
