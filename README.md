@@ -41,8 +41,9 @@ flowchart TB
     subgraph Arete["Arete System"]
         direction TB
         
-        subgraph Researcher["Sub-Agents"]
+        subgraph Agents["Sub-Agents"]
             ResAgent[Researcher<br/><i>Web & Repo Search</i>]:::agent
+            ArchAgent[Architect<br/><i>Diagram Generation</i>]:::agent
         end
 
         subgraph Phases["Brainstorming Pipeline"]
@@ -76,8 +77,10 @@ flowchart TB
     Domains -.-> Diverge
     Domains -.-> Refine
 
-    %% Research loop (bidirectional, available to all phases)
+    %% Agent Interactions
     Phases <-->|Trigger| ResAgent
+    Export -->|Trigger| ArchAgent
+    ArchAgent -.->|Injects Diagrams| ADR
 
     %% Export Logic
     Export --> Tech
