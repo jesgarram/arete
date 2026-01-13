@@ -43,6 +43,31 @@ Skills should suggest transitions when:
 | Refine | All Jobs Filter criteria pass (simple, robust, elegant) |
 | Export | ADR/Spec or Outline written to `context/exports/` |
 
+## Research Support
+
+During any phase, spawn the **researcher** subagent when:
+- User asks "how do others do this?" or "what's the best practice?"
+- A decision needs external validation or prior art
+- The codebase contains relevant patterns worth surfacing
+- Web research could inform the brainstorm direction
+
+**Invocation:**
+```
+Spawn researcher subagent with:
+- Mode: repository | web
+- Question: [specific research question]
+- Context: [relevant brainstorm context]
+```
+
+**Integration points:**
+| Phase | Research trigger |
+|-------|-----------------|
+| Diverge | "Explore how X is done elsewhere" |
+| Converge | "Validate this approach against industry patterns" |
+| Refine | "Find edge cases or failure modes for X" |
+
+Researcher returns structured findings. Incorporate relevant findings into the conversation, citing sources.
+
 ## Session Completion
 
 After export, offer:
