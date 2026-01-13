@@ -2,7 +2,18 @@
 
 *ἀρετή — excellence earned through effort, not given.*
 
-A structured brainstorming framework for Claude Code that argues back.
+A structured brainstorming framework for Claude Code that argues back. It forces you to pause, think, and design before you implement.
+
+## Table of Contents
+
+- [The Problem](#the-problem)
+- [How It Works](#how-it-works)
+- [Getting Started](#getting-started)
+- [Output](#output)
+- [Domains](#domains)
+- [Why It Works](#why-it-works)
+- [System Architecture](#system-architecture)
+- [Contributing](#contributing)
 
 ## The Problem
 
@@ -23,82 +34,61 @@ You:   ...I didn't think about that.
 
 That pause is the point.
 
-## The Workflow
+## How It Works
+
+The core loop is simple: you bring a problem, Arete guides you through three distinct modes of thinking, and you leave with tangible artifacts.
 
 ```mermaid
-flowchart TB
-    %% Styles - C4-ish Palette
+flowchart LR
+    %% Simple Palette
     classDef person fill:#08427b,stroke:#052e56,color:white,rx:10,ry:10;
-    classDef process fill:#23a2d9,stroke:#0e7db8,color:white,rx:5,ry:5;
-    classDef agent fill:#1168bd,stroke:#0b4884,color:white,rx:5,ry:5;
-    classDef data fill:#999999,stroke:#666666,color:white,rx:0,ry:0;
+    classDef phase fill:#23a2d9,stroke:#0e7db8,color:white,rx:5,ry:5;
     classDef artifact fill:#438dd5,stroke:#2e6295,color:white,rx:0,ry:0,stroke-dasharray: 5 5;
 
-    %% Nodes
-    User(User):::person
-    Problem[Problem Input]:::data
-
-    subgraph Arete["Arete System"]
-        direction TB
-        
-        subgraph Agents["Sub-Agents"]
-            ResAgent[Researcher<br/><i>Web & Repo Search</i>]:::agent
-            ArchAgent[Architect<br/><i>Diagram Generation</i>]:::agent
-        end
-
-        subgraph Phases["Brainstorming Pipeline"]
-            direction LR
-            Diverge[DIVERGE<br/><i>Explore</i>]:::process
-            Converge[CONVERGE<br/><i>Decide</i>]:::process
-            Refine[REFINE<br/><i>Polish</i>]:::process
-            Export[EXPORT<br/><i>Save</i>]:::process
-            
-            Diverge --> Converge --> Refine --> Export
-        end
-        
-        Domains[(Domain<br/>Knowledge)]:::data
-    end
-
-    subgraph Artifacts["Output Artifacts"]
-        direction TB
-        subgraph Tech["Technical Track"]
-            ADR[ADR<br/><i>exports/</i>]:::artifact
-            Plan[Implementation Plan<br/><i>plans/</i>]:::artifact
-        end
-        subgraph Conc["Conceptual Track"]
-            Outline[Outline<br/><i>exports/</i>]:::artifact
-        end
-    end
-
-    %% Connections
-    User --> Problem --> Diverge
+    User(User):::person --> Input[Problem]
     
-    %% Knowledge injection
-    Domains -.-> Diverge
-    Domains -.-> Refine
+    subgraph Process["Brainstorming Session"]
+        direction LR
+        Input --> Diverge[DIVERGE]:::phase
+        Diverge --> Converge[CONVERGE]:::phase
+        Converge --> Refine[REFINE]:::phase
+        Refine --> Export[EXPORT]:::phase
+    end
 
-    %% Agent Interactions
-    Phases <-->|Trigger| ResAgent
-    Export -->|Trigger| ArchAgent
-    ArchAgent -.->|Injects Diagrams| ADR
-
-    %% Export Logic
-    Export --> Tech
-    Export --> Conc
+    Export --> Tech[ADR + Plan]:::artifact
+    Export --> Conc[Outline]:::artifact
 ```
 
+### The Phases
+
+1.  **DIVERGE**: Explore options and challenge assumptions. Arete acts as a critic, asking "Why?" and "What if?" to broaden the scope.
+2.  **CONVERGE**: Narrow down the possibilities. You select the most viable approach based on technical constraints and requirements.
+3.  **REFINE**: Polish the details. This is where you flesh out the specific implementation steps or narrative structure.
+4.  **EXPORT**: Generate the final artifacts (ADR, Plan, or Outline) based on the session context.
+
 ## Getting Started
+
+### Installation
+
+Run the following commands inside your Claude Code session:
 
 ```bash
 /plugin marketplace add jesgarram/arete
 /plugin install arete@jesgarram/arete
 ```
 
-Start a session:
+### Usage Example
+
+Start a session with a specific goal:
 
 ```bash
 /arete:brainstorm "Secure access to a production database in a private VNet"
 ```
+
+**What to expect:**
+1.  **Initialization**: Arete analyzes your request and loads relevant domain knowledge (e.g., *Distributed Systems*, *Security*).
+2.  **The Debate**: It will ask clarifying questions about your assumptions (e.g., "Why not use Private Endpoints?").
+3.  **The Result**: Once you've navigated the phases, it generates a decision record and an implementation plan.
 
 ## Output
 
@@ -140,7 +130,7 @@ Arete loads questions matched to your problem.
 
 **Conceptual** — presentations, technical writing, talks, teaching
 
-Add your own in `skills/diverge/reference/`:
+To add your own, you can fork the repository and add markdown files in `skills/diverge/reference/`:
 
 ```markdown
 # Your Domain
@@ -162,11 +152,57 @@ The fundamental trade-off in this domain.
 
 **[Zone of Proximal Development](https://en.wikipedia.org/wiki/Zone_of_proximal_development)**: The band just past what you can do alone. Close enough to reach, far enough to stretch. Teachers know it. Coaches know it. Most AI tools ignore it. Arete doesn't agree with you—it asks the next question.
 
+## System Architecture
+
+Under the hood, Arete orchestrates specialized sub-agents and domain knowledge to support the session.
+
+**Key Components:**
+- **Researcher**: A lateral agent available during any brainstorming phase to fetch context from the web or codebase.
+- **Architect**: Triggered during export to convert text descriptions into Mermaid diagrams.
+- **Domains**: Injected question sets that challenge assumptions.
+
+```mermaid
+flowchart TB
+    %% Styles
+    classDef process fill:#23a2d9,stroke:#0e7db8,color:white,rx:5,ry:5;
+    classDef agent fill:#1168bd,stroke:#0b4884,color:white,rx:5,ry:5;
+    classDef data fill:#999999,stroke:#666666,color:white,rx:0,ry:0;
+    
+    %% Lateral Agent
+    ResAgent[Researcher<br/><i>Web & Repo Search</i>]:::agent
+
+    subgraph Pipeline["Brainstorming Pipeline"]
+        direction LR
+        Diverge[DIVERGE]:::process
+        Converge[CONVERGE]:::process
+        Refine[REFINE]:::process
+        Export[EXPORT]:::process
+        
+        Diverge --> Converge --> Refine --> Export
+    end
+
+    %% Export Agent
+    ArchAgent[Architect<br/><i>Diagram Generation</i>]:::agent
+    
+    %% Knowledge
+    Domains[(Domain<br/>Knowledge)]:::data
+
+    %% Connections
+    Domains -.-> Diverge
+    Domains -.-> Refine
+
+    %% Lateral Interactions
+    Diverge <-->|Ask| ResAgent
+    Converge <-->|Ask| ResAgent
+    Refine <-->|Ask| ResAgent
+
+    %% Export Interactions
+    Export -->|Trigger| ArchAgent
+```
+
 ## Contributing
 
 1. Fork the repo
 2. Create a branch (`git checkout -b my-domain`)
 3. Add your changes
 4. Open a PR
-
-New domains sharpen the challenge. The more specific the questions, the harder it is to coast.
