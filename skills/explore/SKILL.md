@@ -1,9 +1,9 @@
 ---
-name: diverge
-description: Divergent thinking phase for brainstorming. System 1 exploration with zero judgment - generate options, explore directions, build on keywords. Use when exploring a new problem space.
+name: explore
+description: Divergent thinking phase for brainstorming. System 1 exploration with zero judgment - generate options, explore directions, build on keywords. Use when exploring a new problem space after grounding.
 ---
 
-# Diverge
+# Explore
 
 ## Cognitive Mode
 
@@ -104,17 +104,17 @@ Ask these **before** diving into domain-specific questions.
    - Provide summary: "We've explored: [key points from conversation]"
    - Suggest transition: "Ready to evaluate options, or keep exploring?"
 
-No max question limit - continue until user signals readiness to converge.
+No max question limit - continue until user signals readiness to decide.
 
 ## Phase Completion
 
-Signal readiness to converge when:
+Signal readiness to decide when:
 - 5+ distinct directions have been explored
 - User shows preference: "I like option X", "leaning toward..."
 - User explicitly asks to narrow down
 
 Transition prompt:
-> "We've explored [N] directions: [list]. Ready to evaluate and pick one? Say 'converge' or keep exploring."
+> "We've explored [N] directions: [list]. Ready to evaluate and pick one? Say 'decide' or keep exploring."
 
 ## Past Decisions (Optional)
 
@@ -137,6 +137,6 @@ Only reference exports if user asks or problem closely matches past work.
 - **Length**: 2-3 lines (40-75 words)
 - **Ratio**: 80% questions, 20% statements
 - **Tone**: Curious, exploratory, encouraging
-- **NO solutions**: Save judgment and recommendations for converge phase
+- **NO solutions**: Save judgment and recommendations for decide phase
 - **Build on keywords**: User says "scale" → "Scale in users or data? What breaks first?"
 - **Encourage wild ideas**: "What if we removed the database entirely?"
