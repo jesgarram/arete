@@ -1,7 +1,9 @@
 ---
-name: converge
-description: Convergent thinking phase for brainstorming. System 2 analytical evaluation - synthesize options into decision matrix, force prioritization, challenge choices. Use after exploring 5+ directions in diverge phase when ready to narrow down options. Keywords: evaluate, decide, prioritize, trade-offs, matrix, compare, choose.
+name: decide
+description: Convergent thinking phase for brainstorming. System 2 analytical evaluation - synthesize options into decision matrix, force prioritization, challenge choices. Use after exploring 5+ directions in explore phase when ready to narrow down options. Keywords: evaluate, decide, prioritize, trade-offs, matrix, compare, choose.
 ---
+
+# Decide
 
 ## Cognitive Mode
 
@@ -13,7 +15,7 @@ description: Convergent thinking phase for brainstorming. System 2 analytical ev
 
 ### 1. Audit & Extract
 
-- Extract 3-5 distinct approaches from the diverge phase
+- Extract 3-5 distinct approaches from the explore phase
 
 ### 2. Present Decision Matrix
 
@@ -71,13 +73,13 @@ Never accept first answer without justification:
 
 ## Phase Completion
 
-Signal readiness to refine when:
+Signal readiness to stress when:
 - One path is selected
 - User has explicitly accepted trade-offs
 - No remaining "but what about..." objections
 
 Transition prompt:
-> "Decision locked: [X] with trade-off [Y]. Ready to stress-test and polish? Say 'refine' or revisit options."
+> "Decision locked: [X] with trade-off [Y]. Ready to stress-test and polish? Say 'stress' or revisit options."
 
 ## Behavioral Guidelines
 
