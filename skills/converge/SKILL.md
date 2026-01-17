@@ -1,7 +1,9 @@
 ---
 name: converge
-description: Convergent thinking phase for brainstorming. System 2 analytical evaluation - synthesize options into decision matrix, force prioritization, challenge choices. Use after exploring 5+ directions in diverge phase when ready to narrow down options. Keywords: evaluate, decide, prioritize, trade-offs, matrix, compare, choose.
+description: Convergent thinking phase for brainstorming. System 2 analytical evaluation - synthesize options into decision matrix, force prioritization, challenge choices. Use after exploring 5+ directions in diverge phase when ready to narrow down options. Keywords - evaluate, decide, prioritize, trade-offs, matrix, compare, choose.
 ---
+
+# Converge
 
 ## Cognitive Mode
 
