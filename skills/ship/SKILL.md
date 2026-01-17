@@ -1,9 +1,9 @@
 ---
-name: export
-description: Generate retrievable artifacts from brainstorm sessions. Use after REFINE phase to create ADRs + Plans (technical) or Outlines (conceptual). Spawns parallel architect subagents to generate inline mermaid diagrams.
+name: ship
+description: Generate retrievable artifacts from brainstorm sessions. Use after STRESS phase to create ADRs + Plans (technical) or Outlines (conceptual). Spawns parallel architect subagents to generate inline mermaid diagrams.
 ---
 
-# Export
+# Ship
 
 Transform brainstorm decisions into retrievable, actionable artifacts.
 
