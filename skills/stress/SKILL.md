@@ -1,9 +1,9 @@
 ---
-name: refine
-description: Refinement phase for brainstorming. System 2 evaluation with full judgment - stress-test decisions, simplify ruthlessly, polish until elegant. Use after converge phase has selected a clear path.
+name: stress
+description: Stress-test phase for brainstorming. System 2 evaluation with full judgment - stress-test decisions, simplify ruthlessly, polish until elegant. Use after decide phase has selected a clear path.
 ---
 
-# Refine
+# Stress
 
 ## Cognitive Mode
 
@@ -16,15 +16,15 @@ description: Refinement phase for brainstorming. System 2 evaluation with full j
 
 On skill load:
 
-1. **Verify converge output exists** - user must have a selected direction
-2. **Detect track and domain** from the converged decision
+1. **Verify decide output exists** - user must have a selected direction
+2. **Detect track and domain** from the decided direction
 3. **State detection** conversationally (or ask if unclear)
 4. **Load appropriate domain reference file** from reference/{track}/{domain}.md
-5. **Begin refinement flow**
+5. **Begin stress-test flow**
 
 ## Track Detection
 
-Infer from the converged decision context.
+Infer from the decided direction context.
 
 **Technical signals:**
 - Architecture: "system, service, API, component, module, layer"
@@ -73,27 +73,17 @@ Claude can pivot to other domains mid-conversation by loading additional referen
 
 ## System Design Reference
 
-For broader system design principles beyond domain-specific questions, reference `docs/ddia-system-design-principles.md`.
-
 Apply these three pillars to every technical decision:
 
 1. **🛡️ Reliability**: Does it work correctly despite faults? Hardware failures, software bugs, human errors?
 2. **📈 Scalability**: Can it handle growth? What breaks at 10x load? What's the scaling strategy?
 3. **🔧 Maintainability**: Can others operate and evolve it? Is it simple? Observable? Evolvable?
 
-## The Jobs Filter
-
-Apply these three filters to everything:
-
-1. **Simplicity**: Can this 10-step flow be 3? Is this feature essential or just possible?
-2. **Robustness**: What happens when this fails? What if the audience is skeptical?
-3. **Elegance**: Does it feel inevitable? Is the code clean? Is the story beautiful?
-
-## Refinement Flow
+## Stress-Test Flow
 
 1. **State detection** (conversational tone)
-   - Example: "You've converged on [X]. Now let's stress-test it - I'll be the skeptic."
-   - If unclear: "What exactly did you decide on? I need the specific choice to refine."
+   - Example: "You've decided on [X]. Now let's stress-test it - I'll be the skeptic."
+   - If unclear: "What exactly did you decide on? I need the specific choice to stress-test."
 
 2. **Foundation Audit** (validate core before polishing details)
    
@@ -136,7 +126,7 @@ Apply these three filters to everything:
 
 ## Past Decisions (Optional)
 
-If relevant, check `context/exports/*.md` for past ADRs that might inform refinement.
+If relevant, check `context/exports/*.md` for past ADRs that might inform the stress test.
 
 Only reference exports if user asks or problem closely matches past work.
 
@@ -151,10 +141,9 @@ Only reference exports if user asks or problem closely matches past work.
 
 ## Phase Completion
 
-Signal readiness to export when:
-- All Jobs Filter criteria pass (simple, robust, elegant)
+Signal readiness to ship when:
 - No remaining "what if..." scenarios unanswered
 - User confirms production-ready
 
 Transition prompt:
-> "This is production-ready. Ready to export as ADR/Spec? Say 'export' or keep polishing."
+> "This is production-ready. Ready to ship as ADR/Spec? Say 'ship' or keep polishing."
