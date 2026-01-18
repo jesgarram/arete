@@ -109,20 +109,6 @@ If clarity isn't reached after multiple probes:
 - Recommend: "Needs more discovery" - user should talk to stakeholders before proceeding
 - Output: `recommendation: "needs more discovery"` in session file
 
-## Session File Output
-
-After grounding completes, spawn haiku writer to append to session file:
-
-```yaml
-## GROUND
-problem: "[one sentence: the actual problem]"
-who: "[who experiences the pain]"
-pain: "[what hurts and when]"
-inaction_cost: "[what happens if nothing changes]"
-recommendation: "proceed" | "do not proceed" | "needs more discovery"
-grounded_at: "[timestamp]"
-```
-
 ## Transition
 
 When grounded, announce:
