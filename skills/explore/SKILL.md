@@ -100,21 +100,15 @@ Ask these **before** diving into domain-specific questions.
    - User mentions "latency" → "Latency for what operation? P50 or P99?"
    - User mentions "audience skepticism" → "Skeptical about what specifically? Cost? Feasibility?"
 
-6. **After 10+ questions without user signal:**
-   - Provide summary: "We've explored: [key points from conversation]"
-   - Suggest transition: "Ready to evaluate options, or keep exploring?"
-
 No max question limit - continue until user signals readiness to decide.
 
-## Phase Completion
+## Transition
+**Coverage**: Multiple distinct approaches surfaced
+**Saturation**: New questions yield familiar directions
+**Gate**: "Any directions we haven't considered?"
+**Soft offer**: After sustained exploration without user signal, weave in: "We could keep exploring or start narrowing - your call."
 
-Signal readiness to decide when:
-- 5+ distinct directions have been explored
-- User shows preference: "I like option X", "leaning toward..."
-- User explicitly asks to narrow down
-
-Transition prompt:
-> "We've explored [N] directions: [list]. Ready to evaluate and pick one? Say 'decide' or keep exploring."
+When criteria met → announce gate → user confirms → invoke decide skill.
 
 ## Past Decisions (Optional)
 

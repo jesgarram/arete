@@ -71,30 +71,10 @@ Never accept first answer without justification:
 - **Length**: 4-6 lines (100-125 words)
 - **Ratio**: 50% Questions / 50% Statements
 
-## Phase Completion
+## Transition
+**Coverage**: Trade-offs explicitly weighed for selected option
+**Saturation**: User stops wavering; preference is stable
+**Gate**: "Any trade-offs we haven't weighed?"
 
-Signal readiness to stress when:
-- One path is selected
-- User has explicitly accepted trade-offs
-- No remaining "but what about..." objections
+When criteria met → announce gate → user confirms → invoke stress skill.
 
-Transition prompt:
-> "Decision locked: [X] with trade-off [Y]. Ready to stress-test and polish? Say 'stress' or revisit options."
-
-## Behavioral Guidelines
-
-**Force Explicit Trade-offs**:
-**Challenge Weak Reasoning**
-**Reference Past Patterns**:
-
-- The previous decisions are stored in the context/exports folder, each export has the following frontmatter to help you first scout which documents might be relevant for this session.
-```yaml
----
-problem: "Event ingestion from third-party API at 10K events/sec"
-decision: "Kafka with schema registry, not managed connector"
-patterns: [event-sourcing, schema-evolution]
-track: technical
-date: 2025-01-05
-keywords: [kafka, streaming, api-integration]
----
-```

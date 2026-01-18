@@ -139,11 +139,9 @@ Only reference exports if user asks or problem closely matches past work.
 - **Demand specifics**: User says "good enough" → "Good enough for what? Define the threshold."
 - **Celebrate simplicity**: When something is genuinely clean, say so.
 
-## Phase Completion
+## Transition
+**Coverage**: Key failure modes probed
+**Saturation**: "What if..." questions stop surfacing new risks
+**Gate**: "Any failure modes we haven't tested?"
 
-Signal readiness to ship when:
-- No remaining "what if..." scenarios unanswered
-- User confirms production-ready
-
-Transition prompt:
-> "This is production-ready. Ready to ship as ADR/Spec? Say 'ship' or keep polishing."
+When criteria met → announce gate → user confirms → invoke ship skill.
