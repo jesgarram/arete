@@ -1,208 +1,180 @@
 # Arete
 
-*ἀρετή — excellence earned through effort, not given.*
+ἀρετή — excellence earned through effort, not given.
 
-A structured brainstorming framework for Claude Code that argues back. It forces you to pause, think, and design before you implement.
+A structured brainstorming framework for agentic harnesses (e.g. Claude Code, OpenCode CLI, Copilot CLI) that argues back. It forces you to pause, think, and design before you implement.
 
-## Table of Contents
-
-- [The Problem](#the-problem)
-- [How It Works](#how-it-works)
-- [Getting Started](#getting-started)
-- [Output](#output)
-- [Domains](#domains)
-- [Why It Works](#why-it-works)
-- [System Architecture](#system-architecture)
-- [Contributing](#contributing)
-
-## The Problem
-
-You ask. It answers. You ship. Then the system breaks at 3 AM and you realize you never understood why you chose a jumphost over Private Endpoints—you just accepted a suggestion.
-
-Arete asks questions:
-
-```
-Arete: "Why a jumphost?"
-You:   We need to access the database in the VNet.
-Arete: "What are you protecting it from?"
-You:   External access. It's got sensitive data.
-Arete: "So you're exposing an SSH endpoint to reach your most protected resource?"
-You:   It's only accessible from our IP range.
-Arete: "Who manages the patching? The key rotation?"
-You:   ...I didn't think about that.
-```
-
-That pause is the point.
-
-## How It Works
-
-The core loop is simple: you bring a problem, Arete guides you through three distinct modes of thinking, and you leave with tangible artifacts.
-
-```mermaid
-flowchart LR
-    %% Simple Palette
-    classDef person fill:#08427b,stroke:#052e56,color:white,rx:10,ry:10;
-    classDef phase fill:#23a2d9,stroke:#0e7db8,color:white,rx:5,ry:5;
-    classDef artifact fill:#438dd5,stroke:#2e6295,color:white,rx:0,ry:0,stroke-dasharray: 5 5;
-
-    User(User):::person --> Input[Problem]
-    
-    subgraph Process["Brainstorming Session"]
-        direction LR
-        Input --> Diverge[DIVERGE]:::phase
-        Diverge --> Converge[CONVERGE]:::phase
-        Converge --> Refine[REFINE]:::phase
-        Refine --> Export[EXPORT]:::phase
-    end
-
-    Export --> Tech[ADR + Plan]:::artifact
-    Export --> Conc[Outline]:::artifact
-```
-
-### The Phases
-
-1.  **DIVERGE**: Explore options and challenge assumptions. Arete acts as a critic, asking "Why?" and "What if?" to broaden the scope.
-2.  **CONVERGE**: Narrow down the possibilities. You select the most viable approach based on technical constraints and requirements.
-3.  **REFINE**: Polish the details. This is where you flesh out the specific implementation steps or narrative structure.
-4.  **EXPORT**: Generate the final artifacts (ADR, Plan, or Outline) based on the session context.
-
-## Getting Started
-
-### Installation
-
-Run the following commands inside your Claude Code session:
+**Install (for Claude Code):**
 
 ```bash
 /plugin marketplace add jesgarram/arete
 /plugin install arete@jesgarram/arete
 ```
 
-### Usage Example
-
-Start a session with a specific goal:
-
-```bash
-/arete:brainstorm "Secure access to a production database in a private VNet"
-```
-
-**What to expect:**
-1.  **Initialization**: Arete analyzes your request and loads relevant domain knowledge (e.g., *Distributed Systems*, *Security*).
-2.  **The Debate**: It will ask clarifying questions about your assumptions (e.g., "Why not use Private Endpoints?").
-3.  **The Result**: Once you've navigated the phases, it generates a decision record and an implementation plan.
-
-## Output
-
-Arete generates artifacts based on the session track.
-
-**Technical Track**:
-- **ADR** (`context/exports/`): The decision record (Context, Decision, Consequences).
-- **Plan** (`context/plans/`): The implementation details (Steps, Configuration, Error Handling).
-
-**Conceptual Track**:
-- **Outline** (`context/exports/`): A structured outline for your presentation or writing.
-
-Example ADR:
-```yaml
 ---
-problem: "Secure access to production database in private VNet"
-decision: "Private Endpoints with AAD authentication, no jumphost"
-date: 2025-01-11
-plan: "secure-access-plan-2025-01-11.md"
+
+## Quick Start
+
+1. Install the plugin (see above)
+2. Run: `/arete:brainstorm "your problem here"`
+3. Follow the prompts through GROUND → EXPLORE → DECIDE → STRESS → SHIP
+
+That's it. Arete will guide you through each phase.
+
 ---
-```
 
-Six months later, search your ADRs. Find every decision about network access patterns. New engineers read *why* things work the way they do.
+## What It Does
 
-When you discuss component interactions, Mermaid diagrams generate inline:
+**You**: "I want to use MongoDB for this project because it's faster to set up."
+
+**Standard AI**: Generates a `docker-compose.yml` and a schema immediately.
+
+**Arete**: "The data model you described is highly relational. If we use a document store here, we'll end up managing complex relationships in application code. Are we choosing this for the data model, or for setup speed?"
+
+Arete asks clarifying questions before you write code—the kind your best tech lead would ask, except it's 2am and they're asleep.
+
+---
+
+## When to Use
+
+| Good fit | Skip it |
+|----------|---------|
+| Greenfield features | Hotfixes |
+| Architecture decisions | Typo fixes |
+| "Which database?" questions | "Add a button" tasks |
+| Explaining complex topics | Anything under 30 minutes of work |
+| Anything you'll regret in 6 months | |
+
+---
+
+## Who This Is For
+
+Engineers who know that code is a liability, not an asset, and who've inherited systems where nobody remembers why decisions were made. Who've sat in postmortems thinking "we knew this would happen."
+
+If you'd rather write 100 lines that solve the problem than 1000 that look impressive, this is for you.
+
+---
+
+## What This Is NOT
+
+Arete won't make decisions for you. It structures the conversation you should be having and asks questions you might skip. The answers—and the judgment—are still yours.
+
+Sometimes you'll need to pause, dig into actual specs, and come back with real numbers.
+
+---
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `/arete:brainstorm` | Start a full session with a goal |
+| `/arete:research` | Spawn a researcher to explore codebase or web |
+---
+
+## How It Works
+
+**Phase-Based Flow**: Each phase has explicit exit criteria. You can't skip GROUND (problem validation) to jump into DECIDE (solution selection). The structure prevents premature commitment.
+
+**Research Spawning**: During any phase, Arete can spawn a researcher agent to validate decisions—either searching your codebase for existing patterns or the web for industry best practices.
+
+**Architect Spawning**: During SHIP, parallel architect agents generate mermaid diagrams (C4 component, sequence, or flowchart) for sections with component interactions.
+
+**Dual-Track Detection**: Automatically identifies whether you're solving a technical problem (architecture, databases, APIs) or a conceptual one (presentations, documentation, persuasion) and adjusts its questions accordingly.
+
+**Structured Output**: Sessions produce cross-referenced ADRs and implementation plans that become context for future decisions.
+
+---
+
+## The Workflow
 
 ```mermaid
 flowchart LR
-    A[Developer] --> B[AAD Auth]
-    B --> C[Private Endpoint]
-    C --> D[Azure SQL]
+    Ground[GROUND] --> Explore[EXPLORE] --> Decide[DECIDE] --> Stress[STRESS] --> Ship[SHIP]
+
+    Stress -.->|Flawed| Explore
+    Stress -.->|Gaps| Decide
 ```
 
-## Domains
+### Phases
 
-Arete loads questions matched to your problem.
+| Phase | Purpose | Exit Criteria |
+|-------|---------|---------------|
+| **GROUND** | Verify the problem exists and is worth solving | WHY, WHO, and WHAT-IF-NOTHING are clear |
+| **EXPLORE** | Generate multiple approaches to avoid tunnel vision | 5+ directions explored |
+| **DECIDE** | Select an approach and explicitly accept trade-offs | One path chosen, trade-offs acknowledged |
+| **STRESS** | Actively try to break the plan before implementation | No unanswered "what if..." scenarios |
+| **SHIP** | Output a verified design document | ADR + Plan saved to workspace |
 
-**Technical** — distributed systems, storage patterns, data models, batch/stream processing, partitioning
+Each phase can loop back if gaps are found during stress-testing.
 
-**Conceptual** — presentations, technical writing, talks, teaching
+### Quality Gates
 
-To add your own, you can fork the repository and add markdown files in `skills/diverge/reference/`:
+GROUND has a **kill switch**: if stakes are vague ("it's not ideal", "nothing terrible happens"), Arete asks "The cost of inaction isn't clear. Dig deeper or park this?" This prevents wasting time on non-problems.
 
-```markdown
-# Your Domain
+Throughout all phases, Arete watches for common anti-patterns:
 
-## Key Concepts
-The fundamental trade-off in this domain.
+| Anti-pattern | Challenge |
+|--------------|-----------|
+| "It's slow" | How slow? For whom? Under what load? |
+| "Users want X" | Which users? Did you ask them? |
+| "Design for scale" | What's the current scale? What's the target? |
+| "Best practice says..." | Best practice for what context? |
 
-## Questions
-- Question that reveals hidden assumptions
-- Question about failure modes
-- Question about scale implications
-```
+---
+
+## Two Tracks
+
+Arete detects whether you're solving a **technical** or **conceptual** problem:
+
+| Technical | Conceptual |
+|-----------|------------|
+| System design, architecture | Presentations, talks |
+| Database choices, APIs | Blog posts, documentation |
+| Scale, performance, reliability | Audience, narrative, persuasion |
+
+**Technical example**: "Should I use Kafka or RabbitMQ for event processing?"
+→ Questions about throughput, ordering guarantees, operational complexity
+
+**Conceptual example**: "I need to explain our migration to executives"
+→ Questions about audience fears, the one thing they must remember, resistance points
+
+---
+
+## Output
+
+After completing a session, Arete produces cross-referenced documents in the `context/` directory:
+
+### Technical Track:
+
+- ADR (`context/exports/`): The decision record (Context, Decision, Consequences).
+- Plan (`context/plans/`): The implementation details (Steps, Configuration, Error Handling).
+
+### Conceptual Track:
+
+- Outline (`context/exports/`): A structured outline for your presentation or writing.
 
 ## Why It Works
 
-**[System 1 and System 2](https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow)**: Fast and slow thinking. Vibe coding traps you in System 1: no friction, just pattern-matching. Spec-driven tools trap you in System 2: ten pages of requirements, zero momentum. You need both. DIVERGE/CONVERGE/REFINE forces the switch.
+It's hard to argue with yourself when you already have a solution in mind. Arete forces counterarguments into the conversation before you're committed to your first idea.
 
-**[Flow](https://en.wikipedia.org/wiki/Flow_(psychology))**: Challenge slightly exceeds skill. Too easy, you drift. Too hard, you quit. The questions calibrate difficulty.
+The design docs compound. Six months from now, when someone asks "why didn't we just use Postgres?"—the answer is written down.
 
-**[Zone of Proximal Development](https://en.wikipedia.org/wiki/Zone_of_proximal_development)**: The band just past what you can do alone. Close enough to reach, far enough to stretch. Teachers know it. Coaches know it. Most AI tools ignore it. Arete doesn't agree with you—it asks the next question.
+---
 
-## System Architecture
+## Principles
 
-Under the hood, Arete orchestrates specialized sub-agents and domain knowledge to support the session.
+- **No Solutioneering**: Validate the problem before writing code.
+- **Precision over Speed**: "Make it scalable" is a wish. "Handle 10k RPS" is a constraint.
+- **Logic before Infrastructure**: Define *why* and *what* before deciding *how* to deploy.
 
-**Key Components:**
-- **Researcher**: A lateral agent available during any brainstorming phase to fetch context from the web or codebase.
-- **Architect**: Triggered during export to convert text descriptions into Mermaid diagrams.
-- **Domains**: Injected question sets that challenge assumptions.
-
-```mermaid
-flowchart TB
-    %% Styles
-    classDef process fill:#23a2d9,stroke:#0e7db8,color:white,rx:5,ry:5;
-    classDef agent fill:#1168bd,stroke:#0b4884,color:white,rx:5,ry:5;
-    classDef data fill:#999999,stroke:#666666,color:white,rx:0,ry:0;
-    
-    %% Lateral Agent
-    ResAgent[Researcher<br/><i>Web & Repo Search</i>]:::agent
-
-    subgraph Pipeline["Brainstorming Pipeline"]
-        direction LR
-        Diverge[DIVERGE]:::process
-        Converge[CONVERGE]:::process
-        Refine[REFINE]:::process
-        Export[EXPORT]:::process
-        
-        Diverge --> Converge --> Refine --> Export
-    end
-
-    %% Export Agent
-    ArchAgent[Architect<br/><i>Diagram Generation</i>]:::agent
-    
-    %% Knowledge
-    Domains[(Domain<br/>Knowledge)]:::data
-
-    %% Connections
-    Domains -.-> Diverge
-    Domains -.-> Refine
-
-    %% Lateral Interactions
-    Diverge <-->|Ask| ResAgent
-    Converge <-->|Ask| ResAgent
-    Refine <-->|Ask| ResAgent
-
-    %% Export Interactions
-    Export -->|Trigger| ArchAgent
-```
+---
 
 ## Contributing
 
-1. Fork the repo
-2. Create a branch (`git checkout -b my-domain`)
-3. Add your changes
-4. Open a PR
+- **Found a bug or have an idea?** Open an issue on GitHub.
+
+- **Want to add a domain?** Reference libraries live in `skills/*/reference/`. Add a new `.md` file with domain-specific questions and heuristics.
+
+- **Want to improve a phase?** Each phase is a skill in `skills/`. The `SKILL.md` file defines behavior, exit criteria, and response style.
+
+PRs are more than welcome! Keep changes focused.
