@@ -5,82 +5,36 @@ description: Generate retrievable artifacts from brainstorm sessions. Use after 
 
 # Ship
 
-Transform brainstorm decisions into retrievable, actionable artifacts.
+Transform brainstorm decisions into retrievable artifacts.
 
 ## Flow
 
-1. **Detect track**: Technical → ADR + Plan | Conceptual → Outline
-2. **Generate documents** with natural structure from brainstorm
-3. **Identify sections** with component interactions
-4. **Spawn parallel architect subagents** (one per section needing diagrams)
-5. **Inject mermaid** inline where subagents return diagrams
-6. **Add frontmatter** and save:
-   - ADRs/Outlines → `context/exports/`
-   - Plans → `context/plans/`
+1. Detect track: Technical → ADR + Plan | Conceptual → Outline
+2. Generate documents from brainstorm content
+3. Identify sections with component interactions → spawn parallel architect subagents
+4. Inject returned mermaid inline (max 3 diagrams per doc)
+5. Add frontmatter (`problem:`, `date:`) and save
 
-## Frontmatter Schema
+## Output
 
-Minimal. Everything else is discoverable by reading the doc.
+| Track | Document | Location | Naming |
+|-------|----------|----------|--------|
+| Technical | ADR | `context/exports/` | `[slug]-adr-YYYY-MM-DD.md` |
+| Technical | Plan | `context/plans/` | `[slug]-plan-YYYY-MM-DD.md` |
+| Conceptual | Outline | `context/exports/` | `[slug]-outline-YYYY-MM-DD.md` |
 
-```yaml
----
-problem: "One-line problem statement"
-date: YYYY-MM-DD
----
-```
+Technical ADR + Plan cross-reference each other via frontmatter.
 
-## Technical Track → ADR + Plan
+## Templates
 
-Two complementary documents: ADR captures the decision, Plan captures the implementation.
-
-### ADR (Architecture Decision Record)
-
-The **why** and **what** of the decision. Saved to `context/exports/`.
-
-**Template:** See [`reference/ADR.md`](reference/ADR.md) for the full ADR template with required sections and naming conventions.
-
-### Plan (Implementation Plan)
-
-The **how** of the decision. Saved to `context/plans/`.
-
-**Template:** See [`reference/Plan.md`](reference/Plan.md) for the full Plan template with required and optional sections.
-
-## Conceptual Track → Outline
-
-For non-technical brainstorm sessions.
-
-**Template:** See [`reference/Outline.md`](reference/Outline.md) for the full Outline template with required sections and naming conventions.
+- **ADR**: [`reference/ADR.md`](reference/ADR.md) - the why and what
+- **Plan**: [`reference/Plan.md`](reference/Plan.md) - the how
+- **Outline**: [`reference/Outline.md`](reference/Outline.md) - conceptual track
 
 ## Diagram Generation
 
-For sections describing **component interactions**, spawn the architect subagent.
+Spawn architect subagent for sections with component interactions.
 
-**Triggers** (keywords indicating architecture):
-- Components: "service", "database", "API", "cache", "queue", "client"
-- Interactions: "calls", "sends", "receives", "queries", "connects", "flows"
+**Trigger keywords**: service, database, API, cache, queue, client, calls, sends, flows
 
-**Process:**
-1. Identify all sections with component interactions
-2. Spawn parallel architect subagents (one per section)
-3. Each subagent receives: section title + section text
-4. Each subagent returns: mermaid block or `NO_DIAGRAM`
-5. Inject returned mermaid inline after section content
-
-**Cap:** Maximum 3 diagrams per document to avoid over-diagramming.
-
-## File Output
-
-### Technical Track
-**ADR Location**: `context/exports/`
-**Plan Location**: `context/plans/`
-
-**Naming**:
-- ADR: `[problem-slug]-adr-YYYY-MM-DD.md`
-- Plan: `[problem-slug]-plan-YYYY-MM-DD.md`
-
-Both files cross-reference each other via frontmatter (`plan:` and `adr:` fields).
-
-### Conceptual Track
-**Location**: `context/exports/`
-
-**Naming**: `[problem-slug]-outline-YYYY-MM-DD.md`
+**Process**: Identify sections → spawn parallel subagents (section title + text) → inject returned mermaid or discard `NO_DIAGRAM`

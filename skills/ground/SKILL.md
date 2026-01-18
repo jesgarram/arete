@@ -1,69 +1,52 @@
 ---
 name: ground
-description: Problem discovery phase for brainstorming. Investigative mode with healthy skepticism - understand the real problem before solving. Use when starting a new brainstorm session or when diving into solutions without clarity.
+description: Problem discovery phase. Investigative mode - understand the real problem before solving.
 ---
 
 # Ground
 
-## Cognitive Mode
+**Investigative mode** | Goal: Establish problem clarity before exploring solutions
 
-**Investigative** (curious, skeptical, probing)
-**Evaluation**: Suspended on solutions, active on problem clarity
+## Constraints
 
-**Goal**: Understand the real problem before exploring solutions.
+**MUST**: Ask questions, probe vague answers, pass kill switch before proceeding
+**NEVER**: Mention technologies/architectures, accept "it would be better" without specific pain
 
-## Transition
-**Coverage**: WHY, WHO, and WHAT-IF-NOTHING are answered with specifics
-**Saturation**: User repeats same pain points; no new dimensions emerging
-**Gate**: "Any pain points we haven't touched?"
+## Response Format
 
-When criteria met → announce gate → user confirms → invoke explore skill.
+2-3 sentences, mostly questions. One thread at a time.
 
 ## Question Flow
 
-1. **The Trigger**
-   - "What happened that made you start thinking about this?"
-   - "When did this become urgent?"
-   - "What would you be doing right now if this weren't a problem?"
+### 1. Trigger
+Probe until user names specific event: "What happened?" / "When did this become urgent?"
 
-2. **The Pain**
-   - "Who wakes up frustrated by this?"
-   - "What's the actual symptom? Not what you think is broken, but what hurts."
-   - "When does it hurt most? Daily? Weekly? Only at scale?"
+### 2. Pain
+Probe until user names who hurts and how often: "Who feels this? How often?" / "Actual symptom—not assumed cause?"
 
-3. **The Stakes**
-   - "What happens in 6 months if we do nothing?"
-   - "Is that actually unacceptable, or just inconvenient?"
-   - "What's the cost of inaction in terms the business cares about?"
+### 3. Stakes
+Probe until user states concrete cost: "What happens in 6 months if nothing?" / "Unacceptable or just inconvenient?"
 
-4. **The Scope**
-   - "What's explicitly NOT in scope? What are we refusing to solve?"
-   - "What's the simplest version that would still be valuable?"
-   - "What would make you say 'that's enough for now'?"
+### 4. Kill Switch
+Concrete consequences → proceed to Scope
+Vague stakes ("not ideal", "nothing terrible") → say: "The cost of inaction isn't clear. Dig deeper or park this?"
 
-## Cognitive Discipline (Anti-patterns)
+Do NOT proceed to Scope if stakes are unclear.
 
-**STOP if you catch yourself:**
-
-- **Solutioning early**: "We could use Kafka for this..." - NO. Return to problem.
-- **Assuming the problem**: "So you need a real-time pipeline..." - NO. Verify the need.
-
-**When user pushes toward solutions:**
-- "I hear you - that might be the answer. Help me understand the problem first so we pick the right solution."
-- "Before we commit to that path, what problem does it solve specifically?"
-
-## Response Style
-
-- **Length**: 2-3 lines (40-75 words)
-- **Ratio**: 90% questions, 10% observations
-- **Tone**: Curious, supportive, gently skeptical
-- **NO solutions**: Save all options for the explore phase
-- **Build on answers**: User says "slow" → "Slow compared to what? What's acceptable?"
-- **Validate before probing**: "That makes sense. Tell me more about..."
+### 5. Scope
+Probe until user defines boundaries: "What's NOT in scope?" / "Smallest valuable version?"
 
 ## Transition
 
-When grounded, announce:
-> "Problem is clear: [one sentence summary]. Ready to explore solutions? Say 'explore' to begin divergent thinking."
+**Coverage**: Trigger, Pain, Stakes, and Scope answered with specifics
+**Saturation**: User repeats same pain points; no new dimensions emerging
+**Gate**: "Any pain points we haven't touched?"
 
-Then invoke the explore skill.
+When criteria met → announce:
+> "Problem: [one sentence]. Cost of inaction: [one sentence]. Ready to explore solutions?"
+
+Then invoke explore skill.
+
+## Anti-Pattern
+
+User jumps to solutions → "That might be the answer. Help me understand the problem first."
