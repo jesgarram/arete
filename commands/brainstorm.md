@@ -54,3 +54,19 @@ Spawn researcher subagent with:
 - Question: [specific research question]
 - Context: [relevant brainstorm context]
 ```
+
+## Teaching Support
+
+During any phase, spawn the **teacher** subagent when:
+- User types `/teach X` to learn about a concept without polluting context
+- User asks "what is X?" and inline explanation would derail the session
+- A concept comes up that the user should understand but doesn't need discussed now
+
+The teacher runs in background, writes to `context/teachings/`, and sends a brief notification when complete. This preserves brainstorm momentum while enabling learning.
+
+**Invocation:**
+```
+Spawn teacher subagent with:
+- Concept: [concept name to explain]
+- Context: [current phase context for relevance]
+```

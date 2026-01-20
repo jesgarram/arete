@@ -2,7 +2,7 @@
 
 ἀρετή — excellence earned through effort, not given.
 
-A structured brainstorming framework for agentic harnesses (e.g. Claude Code, OpenCode CLI, Copilot CLI) that argues back. It forces you to pause, think, and design before you implement.
+Arete is a plugin for agentic harnesses (Claude Code, OpenCode CLI, Copilot CLI) with a clear goal: helping you build the ***right things, in the right way***. How? By implementing a guided brainstorming framework that forces you to pause, think, and design before you implement.
 
 **Install (for Claude Code):**
 
@@ -31,7 +31,7 @@ That's it. Arete will guide you through each phase.
 
 **Arete**: "The data model you described is highly relational. If we use a document store here, we'll end up managing complex relationships in application code. Are we choosing this for the data model, or for setup speed?"
 
-Arete asks clarifying questions before you write code—the kind your best tech lead would ask, except it's 2am and they're asleep.
+Arete asks clarifying questions before you write code, the kind your best tech lead would ask, except it's 2am and they're asleep.
 
 ---
 
@@ -68,20 +68,17 @@ Sometimes you'll need to pause, dig into actual specs, and come back with real n
 | Command | Purpose |
 |---------|---------|
 | `/arete:brainstorm` | Start a full session with a goal |
-| `/arete:research` | Spawn a researcher to explore codebase or web |
+| `/teach X` | Learn about concept X without polluting brainstorm context (use mid-session) |
+
 ---
 
 ## How It Works
 
-**Phase-Based Flow**: Each phase has explicit exit criteria. You can't skip GROUND (problem validation) to jump into DECIDE (solution selection). The structure prevents premature commitment.
+There are five phases. They run in order. Each has exit criteria, and you cannot skip ahead.
 
-**Research Spawning**: During any phase, Arete can spawn a researcher agent to validate decisions—either searching your codebase for existing patterns or the web for industry best practices.
+When you need to look something up—prior art, a concept, what others have done: a researcher or teacher runs quietly in the background. You are not interrupted. The results wait in `context/` until you're ready.
 
-**Architect Spawning**: During SHIP, parallel architect agents generate mermaid diagrams (C4 component, sequence, or flowchart) for sections with component interactions.
-
-**Dual-Track Detection**: Automatically identifies whether you're solving a technical problem (architecture, databases, APIs) or a conceptual one (presentations, documentation, persuasion) and adjusts its questions accordingly.
-
-**Structured Output**: Sessions produce cross-referenced ADRs and implementation plans that become context for future decisions.
+At the end, diagrams are drawn. Components, sequences, flows. Whatever the design requires.
 
 ---
 
@@ -153,11 +150,9 @@ After completing a session, Arete produces cross-referenced documents in the `co
 
 - Outline (`context/exports/`): A structured outline for your presentation or writing.
 
-## Why It Works
+### Teachings (Any Track):
 
-It's hard to argue with yourself when you already have a solution in mind. Arete forces counterarguments into the conversation before you're committed to your first idea.
-
-The design docs compound. Six months from now, when someone asks "why didn't we just use Postgres?"—the answer is written down.
+- Teaching (`context/teachings/`): Deep-dive explanation of a concept, with diagrams. Generated via `/teach X`.
 
 ---
 
