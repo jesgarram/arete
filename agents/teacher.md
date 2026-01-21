@@ -19,7 +19,7 @@ Output: Markdown teaching at context/teachings/{timestamp}-{concept}.md + brief 
 ## Execution Flow
 
 1. Parse concept name and phase context
-2. Load template from [`reference/teaching-template.md`](reference/teaching-template.md)
+2. Load template from [`references/teaching-template.md`](references/teaching-template.md)
 3. Generate all 5 sections with concept applied
 4. Identify sections needing diagrams (primarily "How it works")
 5. Spawn parallel architect subagents for diagrammable sections
@@ -46,7 +46,7 @@ Spawn architect subagent for sections with component interactions.
 
 ## Output Format
 
-See [`reference/teaching-template.md`](reference/teaching-template.md) for full template.
+See [`references/teaching-template.md`](references/teaching-template.md) for full template.
 
 ## Constraints
 

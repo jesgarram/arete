@@ -27,9 +27,9 @@ Technical ADR + Plan cross-reference each other via frontmatter.
 
 ## Templates
 
-- **ADR**: [`reference/ADR.md`](reference/ADR.md) - the why and what
-- **Plan**: [`reference/Plan.md`](reference/Plan.md) - the how
-- **Outline**: [`reference/Outline.md`](reference/Outline.md) - conceptual track
+- **ADR**: [`references/ADR.md`](references/ADR.md) - the why and what
+- **Plan**: [`references/Plan.md`](references/Plan.md) - the how
+- **Outline**: [`references/Outline.md`](references/Outline.md) - conceptual track
 
 ## Diagram Generation
 

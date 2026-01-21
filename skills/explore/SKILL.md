@@ -11,7 +11,7 @@ description: Divergent thinking phase for brainstorming. System 1 exploration wi
 
 ## Initialization
 
-1. Detect track from keywords → load `reference/{track}/{domain}.md`
+1. Detect track from keywords → load `references/{track}/{domain}.md`
 2. State detection conversationally (ask if unclear)
 3. Ask framework questions → domain questions → build on keywords
 

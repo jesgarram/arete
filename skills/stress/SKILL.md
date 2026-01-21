@@ -12,7 +12,7 @@ description: Stress-test phase for brainstorming. System 2 evaluation with full 
 ## Initialization
 
 1. Verify user has a selected direction from decide phase
-2. Detect track from keywords → load `reference/{track}/{domain}.md`
+2. Detect track from keywords → load `references/{track}/{domain}.md`
 3. State detection conversationally (ask if unclear)
 4. Begin stress-test flow
 

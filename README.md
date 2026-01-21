@@ -4,19 +4,22 @@
 
 Arete is a plugin for agentic harnesses (Claude Code, OpenCode CLI, Copilot CLI) with a clear goal: helping you build the ***right things, in the right way***. How? By implementing a guided brainstorming framework that forces you to pause, think, and design before you implement.
 
-**Install (for Claude Code):**
+**Install:**
 
 ```bash
+# Claude Code
 /plugin marketplace add jesgarram/arete
 /plugin install arete@jesgarram/arete
 ```
+
+See [Cross-Platform Usage](#cross-platform-usage) for detailed installation on other platforms.
 
 ---
 
 ## Quick Start
 
 1. Install the plugin (see above)
-2. Run: `/arete:brainstorm "your problem here"`
+2. Run: `/arete:brainstorm "your problem here"` (Claude Code) or `/brainstorm` (OpenCode, Copilot)
 3. Follow the prompts through GROUND → EXPLORE → DECIDE → STRESS → SHIP
 
 That's it. Arete will guide you through each phase.
@@ -34,16 +37,13 @@ That's it. Arete will guide you through each phase.
 Arete asks clarifying questions before you write code, the kind your best tech lead would ask, except it's 2am and they're asleep.
 
 ---
+## How It Works
 
-## When to Use
+There are five phases. They run in order. Each has exit criteria, and you cannot skip ahead.
 
-| Good fit | Skip it |
-|----------|---------|
-| Greenfield features | Hotfixes |
-| Architecture decisions | Typo fixes |
-| "Which database?" questions | "Add a button" tasks |
-| Explaining complex topics | Anything under 30 minutes of work |
-| Anything you'll regret in 6 months | |
+When you need to look something up—prior art, a concept, what others have done: a researcher or teacher runs quietly in the background. You are not interrupted. The results wait in `context/` until you're ready.
+
+At the end, diagrams are drawn. Components, sequences, flows. Whatever the design requires.
 
 ---
 
@@ -63,6 +63,18 @@ Sometimes you'll need to pause, dig into actual specs, and come back with real n
 
 ---
 
+## When to Use
+
+| Good fit | Skip it |
+|----------|---------|
+| Greenfield features | Hotfixes |
+| Architecture decisions | Typo fixes |
+| "Which database?" questions | "Add a button" tasks |
+| Explaining complex topics | Anything under 30 minutes of work |
+| Anything you'll regret in 6 months | |
+
+---
+
 ## Commands
 
 | Command | Purpose |
@@ -70,15 +82,6 @@ Sometimes you'll need to pause, dig into actual specs, and come back with real n
 | `/arete:brainstorm` | Start a full session with a goal |
 | `/teach X` | Learn about concept X without polluting brainstorm context (use mid-session) |
 
----
-
-## How It Works
-
-There are five phases. They run in order. Each has exit criteria, and you cannot skip ahead.
-
-When you need to look something up—prior art, a concept, what others have done: a researcher or teacher runs quietly in the background. You are not interrupted. The results wait in `context/` until you're ready.
-
-At the end, diagrams are drawn. Components, sequences, flows. Whatever the design requires.
 
 ---
 
@@ -156,11 +159,33 @@ After completing a session, Arete produces cross-referenced documents in the `co
 
 ---
 
-## Principles
+## Cross-Platform Usage
 
-- **No Solutioneering**: Validate the problem before writing code.
-- **Precision over Speed**: "Make it scalable" is a wish. "Handle 10k RPS" is a constraint.
-- **Logic before Infrastructure**: Define *why* and *what* before deciding *how* to deploy.
+Arete follows the [Agent Skills specification](https://agentskills.io/specification), making it compatible with multiple agentic platforms.
+
+### OpenCode
+
+See [`.opencode/INSTALL.md`](.opencode/INSTALL.md) for detailed instructions.
+
+
+### GitHub Copilot
+
+See [`.github/INSTALL.md`](.github/INSTALL.md) for detailed instructions.
+
+### Codex
+
+See [`.codex/INSTALL.md`](.codex/INSTALL.md) for detailed instructions.
+
+**Note:** Codex uses [AGENTS.md](https://developers.openai.com/codex/guides/agents-md) for project guidance. Arete subagents are not available in Codex—only skills are supported.
+
+### Platform Feature Matrix
+
+| Feature | Claude Code | OpenCode | Copilot | Codex |
+|---------|-------------|----------|---------|-------|
+| Skills | ✓ | ✓ | ✓ | ✓ |
+| Agents | ✓ | ✓ (generated) | ✓ (generated) | ✗ |
+| Phase orchestration | ✓ | Manual | Manual | Manual |
+| Model routing | ✓ | ✗ | ✗ | ✗ |
 
 ---
 
@@ -168,8 +193,10 @@ After completing a session, Arete produces cross-referenced documents in the `co
 
 - **Found a bug or have an idea?** Open an issue on GitHub.
 
-- **Want to add a domain?** Reference libraries live in `skills/*/reference/`. Add a new `.md` file with domain-specific questions and heuristics.
+- **Want to add a domain?** Reference libraries live in `skills/*/references/`. Add a new `.md` file with domain-specific questions and heuristics.
 
 - **Want to improve a phase?** Each phase is a skill in `skills/`. The `SKILL.md` file defines behavior, exit criteria, and response style.
+
+- **Want to modify an agent?** Edit the canonical version in `agents/`, then run `./scripts/generate-agents.sh`.
 
 PRs are more than welcome! Keep changes focused.
