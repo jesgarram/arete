@@ -19,7 +19,7 @@ See [Cross-Platform Usage](#cross-platform-usage) for detailed installation on o
 ## Quick Start
 
 1. Install the plugin (see above)
-2. Run: `/arete:brainstorm "your problem here"` (Claude Code) or `/brainstorm` (OpenCode, Copilot)
+2. Run: `/arete:brainstorm "your problem here"` (Claude Code) or `just ask to brainstorm a problem in` (OpenCode, Copilot)
 3. Follow the prompts through GROUND → EXPLORE → DECIDE → STRESS → SHIP
 
 That's it. Arete will guide you through each phase.
@@ -75,16 +75,6 @@ Sometimes you'll need to pause, dig into actual specs, and come back with real n
 
 ---
 
-## Commands
-
-| Command | Purpose |
-|---------|---------|
-| `/arete:brainstorm` | Start a full session with a goal |
-| `/teach X` | Learn about concept X without polluting brainstorm context (use mid-session) |
-
-
----
-
 ## The Workflow
 
 ```mermaid
@@ -137,6 +127,37 @@ Arete detects whether you're solving a **technical** or **conceptual** problem:
 
 **Conceptual example**: "I need to explain our migration to executives"
 → Questions about audience fears, the one thing they must remember, resistance points
+
+---
+
+## Agents
+
+Arete includes three specialized subagents that run in parallel during brainstorming sessions, handling deep work without blocking the main conversation:
+
+### Researcher Agent
+
+Conducts focused research in two modes:
+
+- **Repository mode**: Explores your codebase for existing patterns and implementations
+- **Web mode**: Searches external resources for prior art and best practices
+
+Returns structured findings with sources, confidence levels, and identified gaps.
+
+**Triggered by**: "How do others do this?", "What's the best practice for X?", or when a decision needs external validation.
+
+### Teacher Agent
+
+Generates deep-dive concept explanations without polluting the main brainstorm context.
+
+Produces a 5-section teaching document (What It Is, Why It Matters, How It Works, Trade-offs, Further Reading) saved to `context/teachings/`. Can spawn architect agents for diagram generation.
+
+**Triggered by**: "Teach about X?" during a session.
+
+### Architect Agent
+
+Generates mermaid diagrams (C4 Component, Sequence, Flowchart) from ADR sections describing component interactions.
+
+**Triggered automatically** during the SHIP phase when sections describe services, databases, APIs, or data flows. Also spawned by the teacher agent when diagrams enhance concept explanations.
 
 ---
 

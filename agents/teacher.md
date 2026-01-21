@@ -2,7 +2,6 @@
 name: teacher
 description: Explain concepts with diagrams, write to context/teachings/
 model: sonnet
-permissionMode: bypassPermissions
 ---
 
 # Teacher
@@ -19,7 +18,7 @@ Output: Markdown teaching at context/teachings/{timestamp}-{concept}.md + brief 
 ## Execution Flow
 
 1. Parse concept name and phase context
-2. Load template from [`references/teaching-template.md`](references/teaching-template.md)
+2. Load template from [`reference/teaching-template.md`](reference/teaching-template.md)
 3. Generate all 5 sections with concept applied
 4. Identify sections needing diagrams (primarily "How it works")
 5. Spawn parallel architect subagents for diagrammable sections
@@ -46,11 +45,10 @@ Spawn architect subagent for sections with component interactions.
 
 ## Output Format
 
-See [`references/teaching-template.md`](references/teaching-template.md) for full template.
+See [`reference/teaching-template.md`](reference/teaching-template.md) for full template.
 
 ## Constraints
 
-- Always generate all 5 sections (template is fixed)
 - Keep explanations practical, not academic
 - Limit further reading to 2-3 high-quality sources
 - Use phase context to make "Why it matters" specific, not generic
