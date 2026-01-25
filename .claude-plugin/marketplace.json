@@ -5,14 +5,14 @@
   },
   "metadata": {
     "description": "Cognitive brainstorming protocol for Claude Code",
-    "version": "1.1.2"
+    "version": "1.1.4"
   },
   "plugins": [
     {
       "name": "arete",
       "source": "./",
       "description": "Cognitive brainstorming protocol: DIVERGE -> CONVERGE -> REFINE. Includes domain skills for technical architecture (DDIA patterns) and conceptual work (presentations, articles).",
-      "version": "1.1.2",
+      "version": "1.1.4",
       "author": {
         "name": "Jesus Garcia Ramirez"
       }
