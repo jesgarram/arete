@@ -112,6 +112,18 @@ Throughout all phases, Arete watches for common anti-patterns:
 
 ---
 
+## TDD & Verification
+
+Plans generated in the SHIP phase follow a test-driven approach to infrastructure and implementation:
+
+1.  **Verification Steps First**: Commands to verify the current state *before* you apply changes.
+2.  **Implementation**: The actual code or configuration changes.
+3.  **Validation**: Specific assertions or commands to verify the change worked.
+
+This structure aims to catch integration errors (e.g., Terraform apply succeeds but the app can't talk to the DB) early in the development loop.
+
+---
+
 ## Two Tracks
 
 Arete detects whether you're solving a **technical** or **conceptual** problem:
@@ -168,7 +180,7 @@ After completing a session, Arete produces cross-referenced documents in the `co
 ### Technical Track:
 
 - ADR (`context/exports/`): The decision record (Context, Decision, Consequences).
-- Plan (`context/plans/`): The implementation details (Steps, Configuration, Error Handling).
+- Plan (`context/plans/`): The implementation details (Steps, Configuration, Error Handling) with integrated **TDD verification blocks**.
 
 ### Conceptual Track:
 
