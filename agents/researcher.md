@@ -1,7 +1,7 @@
 ---
 name: researcher
 description: Research repository or web based on provided context and instructions
-model: sonnet
+model: haiku
 ---
 
 # Researcher
