@@ -9,6 +9,8 @@ description: Divergent thinking phase for brainstorming. System 1 exploration wi
 
 **System 1** | Evaluation OFF | Goal: Explore widely before narrowing
 
+**One question at a time. Wait for the answer before asking the next.**
+
 ## Initialization
 
 1. Detect track from keywords → load `references/{track}/{domain}.md`
@@ -52,9 +54,11 @@ Ask before domain-specific questions.
 ## Question Flow
 
 1. State detection conversationally
-2. Ask all 3 framework questions
-3. Transition to domain questions from loaded reference file
-4. Build on user keywords (user says "latency" → "P50 or P99?")
+2. Ask framework question 1 → wait for answer
+3. Ask framework question 2 → wait for answer
+4. Ask framework question 3 → wait for answer
+5. Transition to domain questions **one at a time** from loaded reference file
+6. Build on user keywords between questions (user says "latency" → "P50 or P99?")
 
 No max limit - continue until user signals readiness.
 
@@ -72,4 +76,4 @@ Check `context/exports/*.md` if user asks or problem closely matches past work.
 
 ## Response Style
 
-2-3 lines, 80% questions. No solutions—save for decide phase. Build on user keywords. Encourage wild ideas.
+2-3 lines, **one question per response**. No solutions—save for decide phase. Build on user keywords. Encourage wild ideas.
