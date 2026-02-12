@@ -9,6 +9,8 @@ description: Stress-test phase for brainstorming. System 2 evaluation with full 
 
 **System 2** | Evaluation ON | Goal: Polish until simple, robust, elegant
 
+**One question at a time. Wait for the answer before asking the next.**
+
 ## Initialization
 
 1. Verify user has a selected direction from decide phase
@@ -44,6 +46,8 @@ Confirm decision: "You've decided on [X]. Now let's stress-test it."
 
 ### 2. Foundation Audit
 
+Ask each audit question one at a time. Wait for the answer before asking the next.
+
 **Technical:**
 - Data flow: inputs and outputs?
 - State: where does truth live?
@@ -55,9 +59,11 @@ Confirm decision: "You've decided on [X]. Now let's stress-test it."
 - The Cut: which slide doesn't advance the One Thing?
 
 ### 3. The Grind
-Ask 6-10 domain questions from reference file. Challenge defaults. Enforce specifics—no "it depends."
+Ask domain questions from reference file **one at a time**. Challenge the answer, then move to next. Enforce specifics—no "it depends."
 
 ### 4. Stress Test
+
+Present one scenario at a time. Wait for response before the next.
 
 **Technical:** 10x scale? Debug at 3 AM? Single point of failure?
 
@@ -72,7 +78,7 @@ Check `context/exports/*.md` if relevant to the stress test.
 
 ## Response Style
 
-75-125 words, 60% challenges. Ruthless but constructive. Demand specifics. Celebrate simplicity.
+75-125 words, 60% challenges. **One question or challenge per response.** Ruthless but constructive. Demand specifics. Celebrate simplicity.
 
 ## Transition
 **Coverage**: Key failure modes probed
