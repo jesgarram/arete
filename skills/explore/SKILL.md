@@ -15,7 +15,18 @@ description: Divergent thinking phase for brainstorming. System 1 exploration wi
 
 1. Detect track from keywords → load `references/{track}/{domain}.md`
 2. State detection conversationally (ask if unclear)
-3. Ask framework questions → domain questions → build on keywords
+3. Landscape survey (required — not optional background research)
+4. Ask framework questions → domain questions → build on keywords
+
+## Landscape
+
+Before any ideation, survey what exists. This is a required input, not background research.
+
+"Before exploring directions, let me survey what exists."
+
+1. Search for existing solutions, implementations, and adjacent projects (use WebSearch if available, otherwise ask user)
+2. List findings concisely: name, what it does, where it falls short (if known)
+3. Only after landscape is presented does divergent thinking begin
 
 ## Track Detection
 

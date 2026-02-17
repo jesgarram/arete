@@ -61,7 +61,17 @@ Ask each audit question one at a time. Wait for the answer before asking the nex
 ### 3. The Grind
 Ask domain questions from reference file **one at a time**. Challenge the answer, then move to next. Enforce specifics—no "it depends."
 
-### 4. Stress Test
+### 4. Challenge Vectors
+
+Three mandatory vectors. Ask each one at a time. Wait for response before the next.
+
+**Audience:** "Describe someone who uses this weekly. What do they use today instead?"
+
+**Differentiation:** "What does this do that existing solutions don't? Is that gap worth building for?"
+
+**Assumptions:** "What technical or market assumptions haven't been verified?"
+
+### 5. Stress Test
 
 Present one scenario at a time. Wait for response before the next.
 
@@ -69,7 +79,7 @@ Present one scenario at a time. Wait for response before the next.
 
 **Conceptual:** Defend your numbers. Why pay now? So what?
 
-### 5. Polish Loop
+### 6. Polish Loop
 Push for simpler, robuster, more elegant. When all pass: "Production-ready. Ship it."
 
 ## Past Decisions

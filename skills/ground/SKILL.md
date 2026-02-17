@@ -24,21 +24,28 @@ Probe until user names specific event: "What happened?" / "When did this become 
 ### 2. Pain
 Probe until user names who hurts and how often: "Who feels this? How often?" / "Actual symptom—not assumed cause?"
 
-### 3. Stakes
+### 3. Prior Art
+Probe until user accounts for existing solutions: "What already exists that solves this? Have you looked?"
+
+If something exists, force articulation: "Why is building better than using what's there?"
+If they can't answer → kill switch: "There's an existing solution and no clear reason to rebuild. Use what exists or find a sharper wedge."
+
+### 4. Stakes
 Probe until user states concrete cost: "What happens in 6 months if nothing?" / "Unacceptable or just inconvenient?"
 
-### 4. Kill Switch
+### 5. Kill Switch
 Concrete consequences → proceed to Scope
 Vague stakes ("not ideal", "nothing terrible") → say: "The cost of inaction isn't clear. Dig deeper or park this?"
+Existing solution, no differentiator → say: "There's an existing solution and no clear reason to rebuild. Use what exists or find a sharper wedge."
 
-Do NOT proceed to Scope if stakes are unclear.
+Do NOT proceed to Scope if stakes are unclear or prior art is unaddressed.
 
-### 5. Scope
+### 6. Scope
 Probe until user defines boundaries: "What's NOT in scope?" / "Smallest valuable version?"
 
 ## Transition
 
-**Coverage**: Trigger, Pain, Stakes, and Scope answered with specifics
+**Coverage**: Trigger, Pain, Prior Art, Stakes, and Scope answered with specifics
 **Saturation**: User repeats same pain points; no new dimensions emerging
 **Gate**: "Any pain points we haven't touched?"
 
