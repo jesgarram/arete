@@ -1,6 +1,6 @@
 ---
 name: decide
-description: Convergent thinking phase for brainstorming. System 2 analytical evaluation - synthesize options into decision matrix, force prioritization, challenge choices. Use after exploring 5+ directions in explore phase when ready to narrow down options.
+description: Convergent thinking phase for brainstorming. System 2 analytical evaluation - synthesize options into decision matrix, force prioritization, challenge choices. Use after explore phase when ready to narrow down options.
 ---
 
 # Decide
@@ -12,7 +12,7 @@ description: Convergent thinking phase for brainstorming. System 2 analytical ev
 ## Execution
 
 ### 1. Extract
-Pull 3-5 distinct approaches from explore phase.
+Pull the distinct approaches from explore phase (typically 2-5).
 
 ### 2. Present Matrix
 
@@ -43,8 +43,10 @@ Then prompt ranking:
 
 **Conceptual trade-offs:** Inspiration vs Detail vs Fear
 
-### 4. Challenge
+### 4. Challenge & Commit
 Never accept without justification: "Why this over [Alternative]?" / "Truly willing to sacrifice [X]?"
+
+Frame the choice as a **provisional bet**, not a final commitment: "What evidence would change your mind?" This prevents both analysis paralysis and sunk-cost lock-in. The decision is real but reversible if stress-testing reveals problems.
 
 ## Response Style
 
