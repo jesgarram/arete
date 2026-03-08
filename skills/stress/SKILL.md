@@ -22,7 +22,7 @@ description: Stress-test phase for brainstorming. System 2 evaluation with full 
 
 | Track | Keywords |
 |-------|----------|
-| Technical | system, service, API, schema, database, deploy, scale, partition, latency |
+| Technical | system, service, API, schema, database, deploy, scale, partition, latency, endpoint, REST, GraphQL, gRPC |
 | Conceptual | presentation, slides, blog, article, workshop, pitch, proposal |
 
 **Domain routing:**
@@ -34,6 +34,7 @@ description: Stress-test phase for brainstorming. System 2 evaluation with full 
 | distributed-systems | talks |
 | batch-stream | teaching |
 | partitioning | |
+| api-design | |
 | transactions | |
 | skill-authoring | |
 
@@ -68,13 +69,18 @@ Challenge answers given during explore and decide phases. Don't re-ask what was 
 
 Load domain questions from reference file as additional challenges, **one at a time**. Enforce specifics — no "it depends."
 
-### 4. Scenario Stress Test
+### 4. Pre-Mortem
 
-Present one failure scenario at a time. Wait for response before the next.
+Use prospective hindsight (30% more effective than generic "what if" questions):
 
-**Technical:** 10x scale? Debug at 3 AM? Single point of failure? What's the blast radius of a bad deploy?
+"It's 6 months from now and this failed. Walk me through what went wrong."
 
-**Conceptual:** Defend your numbers. Why pay now? So what? What if the skeptic in the room asks [X]?
+Then probe the top 2-3 failure reasons the user names:
+- "What signal would you see NOW if that failure was coming?"
+- "Is that within your control to prevent?"
+
+**Technical:** Focus on operational failures (3 AM debugging, data loss, cascading failures, blast radius).
+**Conceptual:** Focus on audience/stakeholder failures (message didn't land, wrong audience, resistance you didn't anticipate).
 
 ### 5. Polish Loop
 Push for simpler, more robust, more elegant. When all pass: "Production-ready. Ship it."
