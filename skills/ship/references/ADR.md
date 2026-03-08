@@ -32,6 +32,9 @@ plan: "[problem-slug]-plan-YYYY-MM-DD.md"
 **Positive:** [Specific gains]
 **Negative:** [Trade-offs accepted]
 **Mitigations:** [How negatives will be managed]
+
+## Risks
+[Top 2-3 failure modes from stress-testing / pre-mortem. For each: what goes wrong, what signal to watch for, what to do if it happens.]
 ```
 
 ## Naming Convention

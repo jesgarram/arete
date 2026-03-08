@@ -1,7 +1,7 @@
 {
   "name": "arete",
-  "description": "Cognitive brainstorming protocol for Claude Code. Structures thinking through DIVERGE (System 1 exploration) -> CONVERGE (System 2 evaluation) -> REFINE (stress-test and polish) phases. Includes domain skills for technical architecture (DDIA patterns) and conceptual work (presentations, articles).",
-  "version": "1.1.5",
+  "description": "Cognitive brainstorming protocol for Claude Code. Structures thinking through GROUND (problem discovery) -> EXPLORE (divergent) -> DECIDE (convergent) -> STRESS (stress-test) -> SHIP (artifacts) phases. Includes domain skills for technical architecture and conceptual work.",
+  "version": "1.2.0",
   "author": {
     "name": "Jesus Garcia Ramirez"
   },

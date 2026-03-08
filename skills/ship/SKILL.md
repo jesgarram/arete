@@ -5,7 +5,7 @@ description: Generate retrievable artifacts from brainstorm sessions. Use after 
 
 # Ship
 
-Transform brainstorm decisions into retrievable artifacts.
+Transform brainstorm decisions into retrievable artifacts that serve as **boundary objects** — specific enough for engineers to implement from, clear enough for non-engineers to understand trade-offs.
 
 ## Flow
 
