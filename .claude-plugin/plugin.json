@@ -1,7 +1,7 @@
 {
   "name": "arete",
   "description": "Cognitive brainstorming protocol for Claude Code. Structures thinking through GROUND (problem discovery) -> EXPLORE (divergent) -> DECIDE (convergent) -> STRESS (stress-test) -> SHIP (artifacts) phases. Includes domain skills for technical architecture and conceptual work.",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "author": {
     "name": "Jesus Garcia Ramirez"
   },
