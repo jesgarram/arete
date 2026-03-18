@@ -17,12 +17,18 @@ description: Divergent thinking phase for brainstorming. System 1 exploration wi
 2. State detection conversationally (ask if unclear)
 3. Ask framework questions → domain questions → build on keywords
 
+## Reference Loading (Hard Gate)
+
+**STOP.** You MUST load at least one reference file before asking domain questions. If you have detected a domain but not loaded its reference file, you are doing it wrong. Load the reference file NOW before proceeding.
+
+When the loaded reference file includes a `## Framework Questions` section, use THOSE framework questions instead of the defaults below.
+
 ## Track Detection
 
 | Track | Keywords |
 |-------|----------|
 | Technical | latency, throughput, scale, database, API, cache, distributed, partition, consistency, endpoint, REST, GraphQL, gRPC |
-| Conceptual | explain, teach, present, write, audience, stakeholders, slides, blog, talk |
+| Conceptual | explain, teach, present, write, audience, stakeholders, slides, blog, talk, influence, convince, client, meeting, pushback, buy-in, sponsor |
 
 **Domain routing:**
 
@@ -32,7 +38,7 @@ description: Divergent thinking phase for brainstorming. System 1 exploration wi
 | data-models | writing |
 | distributed-systems | talks |
 | batch-stream | teaching |
-| partitioning | |
+| partitioning | stakeholder-management |
 | api-design | |
 | skill-authoring | |
 

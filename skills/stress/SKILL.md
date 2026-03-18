@@ -18,12 +18,16 @@ description: Stress-test phase for brainstorming. System 2 evaluation with full 
 3. State detection conversationally (ask if unclear)
 4. Begin stress-test flow
 
+## Reference Loading (Hard Gate)
+
+**STOP.** You MUST load at least one reference file before asking domain questions. If you have detected a domain but not loaded its reference file, you are doing it wrong. Load the reference file NOW before proceeding.
+
 ## Track Detection
 
 | Track | Keywords |
 |-------|----------|
 | Technical | system, service, API, schema, database, deploy, scale, partition, latency, endpoint, REST, GraphQL, gRPC |
-| Conceptual | presentation, slides, blog, article, workshop, pitch, proposal |
+| Conceptual | presentation, slides, blog, article, workshop, pitch, proposal, influence, convince, stakeholder, client, meeting, pushback, buy-in, sponsor |
 
 **Domain routing:**
 
@@ -33,7 +37,7 @@ description: Stress-test phase for brainstorming. System 2 evaluation with full 
 | data-models | writing |
 | distributed-systems | talks |
 | batch-stream | teaching |
-| partitioning | |
+| partitioning | stakeholder-management |
 | api-design | |
 | transactions | |
 | skill-authoring | |
