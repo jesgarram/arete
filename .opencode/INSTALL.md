@@ -6,7 +6,7 @@ Install Arete skills and agents for OpenCode.
 
 ```bash
 # Clone the repository
-git clone https://github.com/jesgarram/arete-plugin.git ~/.config/opencode/arete
+git clone https://github.com/jesgarram/arete.git ~/.config/opencode/arete
 
 # Symlink skills (Agent Skills spec)
 ln -s ~/.config/opencode/arete/skills ~/.config/opencode/skills
@@ -24,10 +24,10 @@ If you prefer to copy instead of symlink:
 ```bash
 # Skills
 mkdir -p ~/.config/opencode/skills
-cp -r /path/to/arete-plugin/skills/* ~/.config/opencode/skills/
+cp -r /path/to/arete/skills/* ~/.config/opencode/skills/
 
 # Agents (generate to your preferred location)
-/path/to/arete-plugin/scripts/generate-agents.sh \
+/path/to/arete/scripts/generate-agents.sh \
   --platform opencode \
   --output ~/.config/opencode/agents
 ```
@@ -39,10 +39,10 @@ For project-specific installation:
 ```bash
 # In your project root
 mkdir -p .opencode/skills
-cp -r /path/to/arete-plugin/skills/* .opencode/skills/
+cp -r /path/to/arete/skills/* .opencode/skills/
 
 # Generate agents for the project
-/path/to/arete-plugin/scripts/generate-agents.sh \
+/path/to/arete/scripts/generate-agents.sh \
   --platform opencode \
   --output .opencode/agents
 ```

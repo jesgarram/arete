@@ -6,7 +6,7 @@ Install Arete skills for OpenAI Codex.
 
 ```bash
 # Clone the repository
-git clone https://github.com/jesgarram/arete-plugin.git ~/.codex/arete
+git clone https://github.com/jesgarram/arete.git ~/.codex/arete
 
 # Symlink skills
 ln -s ~/.codex/arete/skills ~/.codex/skills
@@ -19,7 +19,7 @@ For project-specific installation:
 ```bash
 # In your project root
 mkdir -p .codex/skills
-cp -r /path/to/arete-plugin/skills/* .codex/skills/
+cp -r /path/to/arete/skills/* .codex/skills/
 ```
 
 ## Usage

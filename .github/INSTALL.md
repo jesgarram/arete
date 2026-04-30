@@ -6,7 +6,7 @@ Install Arete skills and agents for GitHub Copilot.
 
 ```bash
 # Clone the repository
-git clone https://github.com/jesgarram/arete-plugin.git ~/.copilot/arete
+git clone https://github.com/jesgarram/arete.git ~/.copilot/arete
 
 # Symlink skills
 ln -s ~/.copilot/arete/skills ~/.copilot/skills
@@ -24,10 +24,10 @@ For project-specific installation:
 ```bash
 # In your project root
 mkdir -p .github/skills
-cp -r /path/to/arete-plugin/skills/* .github/skills/
+cp -r /path/to/arete/skills/* .github/skills/
 
 # Generate agents for the project
-/path/to/arete-plugin/scripts/generate-agents.sh \
+/path/to/arete/scripts/generate-agents.sh \
   --platform copilot \
   --output .github/agents
 ```
