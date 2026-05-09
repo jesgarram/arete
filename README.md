@@ -98,7 +98,7 @@ flowchart LR
 | **EXPLORE** | Generate multiple approaches to avoid tunnel vision | Multiple distinct approaches surfaced; new questions yield familiar directions |
 | **DECIDE** | Select an approach and explicitly accept trade-offs | Trade-offs explicitly weighed; preference is stable |
 | **STRESS** | Pre-mortem: imagine failure, then prevent it | Key failure modes probed; no new risks surfacing |
-| **SHIP** | Output a verified design document | ADR + Plan saved to workspace |
+| **SHIP** | Output verified artifacts | Technical: ADR + Spec + Plan saved to workspace. Conceptual: Outline. |
 
 Each phase can loop back if gaps are found during stress-testing.
 
@@ -186,8 +186,9 @@ After completing a session, Arete produces cross-referenced documents in the `co
 
 ### Technical Track:
 
-- ADR (`context/exports/`): The decision record (Context, Decision, Consequences).
-- Plan (`context/plans/`): The implementation details (Steps, Configuration, Error Handling) with integrated **TDD verification blocks**.
+- ADR (`context/designs/`): The decision record — *why* and *what* (Context, Decision, Consequences).
+- Spec (`context/specs/`): The testable definition of done — User Requirements, Acceptance Criteria, Non-Functional Requirements.
+- Plan (`context/plans/`): The implementation details with integrated **TDD verification blocks**, where each task may carry `Satisfies: AC-N` linking back to the Spec.
 
 ### Conceptual Track:
 

@@ -94,7 +94,7 @@ After generating the Plan, run the **asymmetric coverage check** before saving:
 - Tasks **without** `Satisfies:` are allowed (scaffolding, refactors, observability). The reverse direction is intentionally not enforced — that's the asymmetry.
 - If any AC has no covering task, **surface the gap** to the user. Three resolutions: (a) add a task that satisfies it, (b) mark the AC as deferred (move to a follow-up section in the Spec), or (c) remove the AC from the Spec. Do not save the artifacts until the gap is resolved.
 
-**Why this matters — failure mode:** *structural compliance ≠ semantic coverage.* It is trivial to stamp `Satisfies: AC-3` on a task that doesn't actually verify AC-3. The form is there, the substance isn't. The enforcement requires every AC reference to come with a real `Verify:` command, so that AC IDs become *carriers of testability*, not theater. Empty IDs would fail this check.
+The asymmetry guards against *structural compliance ≠ semantic coverage*: stamping `Satisfies: AC-3` on a task whose `Verify:` doesn't actually exercise AC-3. Requiring an executable `Verify:` on the satisfying task is what makes AC IDs carriers of testability rather than theater.
 
 ### IaC-Specific Verifications
 

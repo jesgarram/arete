@@ -83,9 +83,7 @@ Stress is where rough user requirements from Ground sharpen into **testable acce
 
 **Trip-wire — when to stop probing:** an AC is good enough when **a `Verify:` command could be written against it**. Same testability primitive Ship enforces at the Plan level. Don't keep probing past testability — diminishing returns and brainstorm fatigue.
 
-If you've probed an AC twice and it's still vague, accept "rough AC" with a flag and let SHIP's AC checkpoint catch any remaining gaps. Don't spiral.
-
-This step does not exist for the Conceptual track — Outlines have no AC machinery.
+If you've probed an AC twice and it's still vague, flag it as rough and carry it into the AC checkpoint (step 7), which is the gate that resolves it. Don't spiral here.
 
 ### 5. Pre-Mortem
 
@@ -120,7 +118,7 @@ Before transitioning to Ship, run the **AC checkpoint**. This is the single most
 
 ## Past Decisions
 
-Check `context/exports/*.md` if relevant to the stress test.
+Check `context/designs/*.md`, `context/specs/*.md`, and `context/exports/*.md` if relevant to the stress test.
 
 ## Response Style
 

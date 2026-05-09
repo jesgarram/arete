@@ -8,7 +8,8 @@ The **how** of the decision. Saved to `context/plans/`.
 ---
 problem: "..."
 date: YYYY-MM-DD
-adr: "[problem-slug]-adr-YYYY-MM-DD.md"
+adr: "../designs/[problem-slug]-adr-YYYY-MM-DD.md"
+spec: "../specs/[problem-slug]-spec-YYYY-MM-DD.md"
 ---
 
 # Implementation Plan: [Title]
