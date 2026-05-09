@@ -20,10 +20,10 @@ Display each option with these dimensions:
 
 **Technical:**
 
-| Option | Effort | Risk | Reversibility | Ops Burden |
-|--------|--------|------|---------------|------------|
-| A      | ...    | ...  | ...           | ...        |
-| B      | ...    | ...  | ...           | ...        |
+| Option | Effort | Risk | Reversibility | NFRs (ops, scale, perf, security) |
+|--------|--------|------|---------------|-----------------------------------|
+| A      | ...    | ...  | ...           | ...                               |
+| B      | ...    | ...  | ...           | ...                               |
 
 **Conceptual:**
 
@@ -32,6 +32,8 @@ Display each option with these dimensions:
 | A      | ...    | ...    | ...        | ...           |
 
 **Reversibility** is consistently the most undervalued axis in tech decisions. Always include it. A reversible bad decision costs far less than an irreversible one.
+
+The **NFRs column** (technical track) is where non-functional requirements surface as trade-offs: scalability, performance, operational burden, security posture, compatibility. These feed the Spec's NFR section at SHIP. Name them as concrete pressures on the option, not abstract qualities ("ops burden: requires a new daemon to run on every host" beats "operationally complex").
 
 Then prompt ranking:
 - Technical: "Rank: Simplicity → Scalability → Cost"
@@ -45,6 +47,8 @@ Then prompt ranking:
 
 ### 4. Challenge & Commit
 Never accept without justification: "Why this over [Alternative]?" / "Truly willing to sacrifice [X]?"
+
+**Fit to user requirements** (technical track): before committing, re-state the user requirements surfaced in Ground and confirm the chosen option can be measured against them. "User requirements were [X]. Can we observe that the chosen option delivers [X]? If yes, AC will fall out naturally in Stress. If no, the option is decoupled from the user — reconsider."
 
 Frame the choice as a **provisional bet**, not a final commitment: "What evidence would change your mind?" This prevents both analysis paralysis and sunk-cost lock-in. The decision is real but reversible if stress-testing reveals problems.
 

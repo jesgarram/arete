@@ -1,6 +1,8 @@
 # ADR Template (Architecture Decision Record)
 
-The **why** and **what** of the decision. Saved to `context/exports/`.
+The **why** and **what** of the decision. Saved to `context/designs/`.
+
+The ADR captures architectural reasoning (why this approach, what we rejected, what we accept). The companion **Spec** captures the testable definition of done. ADR answers "why and what"; Spec answers "what's true when done."
 
 ## Required Sections
 - Context (why now, constraints, forces)
@@ -13,7 +15,8 @@ The **why** and **what** of the decision. Saved to `context/exports/`.
 ---
 problem: "..."
 date: YYYY-MM-DD
-plan: "[problem-slug]-plan-YYYY-MM-DD.md"
+spec: "../specs/[problem-slug]-spec-YYYY-MM-DD.md"
+plan: "../plans/[problem-slug]-plan-YYYY-MM-DD.md"
 ---
 
 # [Title from brainstorm problem statement]
@@ -39,5 +42,5 @@ plan: "[problem-slug]-plan-YYYY-MM-DD.md"
 
 ## Naming Convention
 - ADR: `[problem-slug]-adr-YYYY-MM-DD.md`
-- Location: `context/exports/`
-- Cross-references Plan via frontmatter `plan:` field
+- Location: `context/designs/`
+- Cross-references Spec via frontmatter `spec:` field and Plan via frontmatter `plan:` field

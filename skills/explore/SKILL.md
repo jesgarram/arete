@@ -90,7 +90,7 @@ When criteria met → announce gate → user confirms → call `Skill(skill: "ar
 
 ## Past Decisions
 
-Check `context/exports/*.md` if user asks or problem closely matches past work.
+Check `context/designs/*.md`, `context/specs/*.md`, and `context/exports/*.md` if user asks or problem closely matches past work.
 
 ## Response Style
 

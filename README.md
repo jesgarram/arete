@@ -2,9 +2,72 @@
 
 ἀρετή — excellence earned through effort, not given.
 
-Arete is a plugin for agentic harnesses (Claude Code, OpenCode CLI, Copilot CLI) with a clear goal: helping you build the ***right things, in the right way***. How? By implementing a guided brainstorming framework that forces you to pause, think, and design before you implement.
+LLMs are great at writing code. They're terrible at deciding *what* to build.
 
-**Install:**
+I kept hitting the same wall. I'd give Claude a vague prompt, and ten seconds later I had a `docker-compose.yml`, a schema, and three new dependencies. No questions asked. I was missing this kind of, you know, annoying senior engineer challenging my decisions. So I was like, I'm going to build one.
+
+That's Arete. A guided brainstorm that forces you to pause, think, and design properly before any code gets written. Five phases, each with exit criteria.
+
+## Two tracks
+
+Arete detects whether you're solving a technical or a conceptual problem and routes the questions accordingly.
+
+| Technical | Conceptual |
+|-----------|------------|
+| System design, schemas, scale | Talks, blog posts, audience |
+| "Should I use Kafka or RabbitMQ?" | "How do I explain this migration to execs?" |
+
+## How it works
+
+```mermaid
+flowchart LR
+    Ground[GROUND] --> Explore[EXPLORE] --> Decide[DECIDE] --> Stress[STRESS] --> Ship[SHIP]
+    Stress -.->|Flawed| Explore
+    Stress -.->|Gaps| Decide
+    Stress -.->|Reframed| Ground
+```
+
+Five phases, each a skill. They run in order. If stress-testing finds gaps, you loop back instead of pushing through.
+
+**Ground.** Make sure the problem is real. Probes the trigger, the pain, who hurts, the cost of inaction, and the user requirements. Refuses vague pain — "it's slow" gets "how slow, for whom, under what load?" There's a kill switch: if the stakes are vague ("it's not ideal"), the conversation stops. The thing is, most "problems" don't survive ground.
+
+**Explore.** Diverge. Surfaces multiple approaches before narrowing. No solutioning yet. One question at a time, building on your keywords. You'd be surprised how often "I already know what I want" doesn't survive three minutes of this.
+
+**Decide.** Converge. Forces a trade-off matrix — effort, risk, reversibility, NFRs. Reversibility is the most undervalued axis in tech decisions, of course, so it's always there. The decision is a provisional bet, not a marriage.
+
+**Stress.** The grind. Challenge every claim from explore and decide, and on the technical track, sharpen rough user requirements into testable acceptance criteria. Trip-wire: an AC is good enough when you could write a `Verify:` command for it. Past that point you're spiralling.
+
+**Ship.** Output the artifacts (see below).
+
+### Skipping phases
+
+If you walk in with prior research and a clear idea, you don't have to start from Ground. Each phase is its own skill — call `/arete:stress` directly and start there. I do this myself when I already have a draft and just need the grind.
+
+But only if you know what you're doing. The exit criteria exist because most "problems" don't survive Ground. Skip the phases that already cleared their criteria in your head. Don't skip the ones that didn't.
+
+## Output
+
+On the technical track, three artifacts that cross-reference each other:
+
+| Artifact | Lives in | Answers |
+|----------|----------|---------|
+| ADR | `context/designs/` | *Why and what* |
+| Spec | `context/specs/` | *What's true when done* (User Requirements, Acceptance Criteria, NFRs) |
+| Plan | `context/plans/` | *How* — tasks with `Satisfies: AC-N` linking back to the Spec |
+
+The asymmetric coverage rule: every AC in the Spec must be referenced by at least one Plan task whose `Verify:` is an executable command. Tasks without `Satisfies:` are allowed — scaffolding, refactors, observability. The reverse direction is intentionally not enforced. The point is to make AC IDs carriers of testability, not theater.
+
+On the conceptual track, Ship produces an outline instead. No AC machinery — outlines don't need it.
+
+## Subagents
+
+Three agents run quietly in parallel without blocking the main brainstorm:
+
+- **Researcher** — looks things up. Repository or web. Triggered by "how do others do this?"
+- **Teacher** — explains a concept properly without polluting context. Drops a 5-section doc in `context/teachings/`. Triggered by "teach me about X."
+- **Architect** — draws mermaid diagrams from sections describing components, services, flows. Triggered automatically at Ship.
+
+## Install
 
 ```bash
 # Claude Code
@@ -12,231 +75,34 @@ Arete is a plugin for agentic harnesses (Claude Code, OpenCode CLI, Copilot CLI)
 /plugin install arete@jesgarram/arete
 ```
 
-See [Cross-Platform Usage](#cross-platform-usage) for detailed installation on other platforms.
+Then:
 
----
-
-## Quick Start
-
-1. Install the plugin (see above)
-2. Run: `/arete:brainstorm "your problem here"` (Claude Code) or `just ask to brainstorm a problem in` (OpenCode, Copilot)
-3. Follow the prompts through GROUND → EXPLORE → DECIDE → STRESS → SHIP
-
-That's it. Arete will guide you through each phase.
-
----
-
-## What It Does
-
-**You**: "I want to use MongoDB for this project because it's faster to set up."
-
-**Standard AI**: Generates a `docker-compose.yml` and a schema immediately.
-
-**Arete**: "The data model you described is highly relational. If we use a document store here, we'll end up managing complex relationships in application code. Are we choosing this for the data model, or for setup speed?"
-
-Arete is your **navigator** — in pair-programming terms, it owns the big picture while you drive. It asks the questions your best tech lead would ask, except it's 2am and they're asleep.
-
----
-## How It Works
-
-There are five phases. They run in order. Each has exit criteria, and you cannot skip ahead. If stress-testing reveals gaps, Arete loops back to the right phase instead of pushing forward.
-
-When the problem is too large, Arete breaks it into focused sub-sessions that each get the full treatment.
-
-When you need to look something up—prior art, a concept, what others have done: a researcher or teacher runs quietly in the background. You are not interrupted. The results wait in `context/` until you're ready.
-
-At the end, diagrams are drawn. Components, sequences, flows. Whatever the design requires.
-
----
-
-## Who This Is For
-
-Engineers who know that code is a liability, not an asset, and who've inherited systems where nobody remembers why decisions were made. Who've sat in postmortems thinking "we knew this would happen."
-
-If you'd rather write 100 lines that solve the problem than 1000 that look impressive, this is for you.
-
----
-
-## What This Is NOT
-
-Arete won't make decisions for you. It structures the conversation you should be having and asks questions you might skip. The answers—and the judgment—are still yours.
-
-Sometimes you'll need to pause, dig into actual specs, and come back with real numbers.
-
----
-
-## When to Use
-
-| Good fit | Skip it |
-|----------|---------|
-| Greenfield features | Hotfixes |
-| Architecture decisions | Typo fixes |
-| "Which database?" questions | "Add a button" tasks |
-| Explaining complex topics | Anything under 30 minutes of work |
-| Anything you'll regret in 6 months | |
-
-For problems with multiple independent dimensions ("redesign auth AND migrate the DB AND change the API"), Arete can decompose them into focused sub-sessions.
-
----
-
-## The Workflow
-
-```mermaid
-flowchart LR
-    Ground[GROUND] --> Explore[EXPLORE] --> Decide[DECIDE] --> Stress[STRESS] --> Ship[SHIP]
-
-    Stress -.->|Flawed| Explore
-    Stress -.->|Gaps| Decide
-    Stress -.->|Reframed| Ground
+```
+/arete:brainstorm "I want to refactor our auth service"
 ```
 
-### Phases
+Follow the questions. Don't fight them.
 
-| Phase | Purpose | Exit Criteria |
-|-------|---------|---------------|
-| **GROUND** | Verify the problem exists and is worth solving | Trigger, pain, stakes, assumptions, and scope answered with specifics |
-| **EXPLORE** | Generate multiple approaches to avoid tunnel vision | Multiple distinct approaches surfaced; new questions yield familiar directions |
-| **DECIDE** | Select an approach and explicitly accept trade-offs | Trade-offs explicitly weighed; preference is stable |
-| **STRESS** | Pre-mortem: imagine failure, then prevent it | Key failure modes probed; no new risks surfacing |
-| **SHIP** | Output a verified design document | ADR + Plan saved to workspace |
+For OpenCode, Copilot, or Codex, see the per-platform install files in [`.opencode/`](.opencode/INSTALL.md), [`.github/`](.github/INSTALL.md), and [`.codex/`](.codex/INSTALL.md). Codex doesn't support subagents, so you get skills only.
 
-Each phase can loop back if gaps are found during stress-testing.
+## When to skip it
 
-### Quality Gates
+| Use Arete | Skip it |
+|-----------|---------|
+| Anything you'll regret in 6 months | Hotfixes |
+| Architecture decisions, greenfield features | Typo fixes, "add a button" |
+| "Which database?" questions | Anything under 30 minutes of work |
 
-GROUND has a **kill switch**: if stakes are vague ("it's not ideal", "nothing terrible happens"), Arete asks "The cost of inaction isn't clear. Dig deeper or park this?" This prevents wasting time on non-problems.
-
-Throughout all phases, Arete watches for common anti-patterns:
-
-| Anti-pattern | Challenge |
-|--------------|-----------|
-| "It's slow" | How slow? For whom? Under what load? |
-| "Users want X" | Which users? Did you ask them? |
-| "Design for scale" | What's the current scale? What's the target? |
-| "Best practice says..." | Best practice for what context? |
-
-Arete asks **one question at a time** and acknowledges your answer before moving on. It should feel like a conversation with a sharp colleague, not an interrogation.
-
----
-
-## TDD & Verification
-
-Plans generated in the SHIP phase follow a test-driven approach to infrastructure and implementation:
-
-1.  **Verification Steps First**: Commands to verify the current state *before* you apply changes.
-2.  **Implementation**: The actual code or configuration changes.
-3.  **Validation**: Specific assertions or commands to verify the change worked.
-
-This structure aims to catch integration errors (e.g., Terraform apply succeeds but the app can't talk to the DB) early in the development loop.
-
----
-
-## Two Tracks
-
-Arete detects whether you're solving a **technical** or **conceptual** problem:
-
-| Technical | Conceptual |
-|-----------|------------|
-| System design, architecture | Presentations, talks |
-| Database choices, APIs | Blog posts, documentation |
-| Scale, performance, reliability | Audience, narrative, persuasion |
-
-**Technical example**: "Should I use Kafka or RabbitMQ for event processing?"
-→ Questions about throughput, ordering guarantees, operational complexity
-
-**Conceptual example**: "I need to explain our migration to executives"
-→ Questions about audience fears, the one thing they must remember, resistance points
-
----
-
-## Agents
-
-Arete includes three specialized subagents that run in parallel during brainstorming sessions, handling deep work without blocking the main conversation:
-
-### Researcher Agent
-
-Conducts focused research in two modes:
-
-- **Repository mode**: Explores your codebase for existing patterns and implementations
-- **Web mode**: Searches external resources for prior art and best practices
-
-Returns structured findings with sources, confidence levels, and identified gaps.
-
-**Triggered by**: "How do others do this?", "What's the best practice for X?", or when a decision needs external validation.
-
-### Teacher Agent
-
-Generates deep-dive concept explanations without polluting the main brainstorm context.
-
-Produces a 5-section teaching document (What It Is, Why It Matters, How It Works, Trade-offs, Further Reading) saved to `context/teachings/`. Can spawn architect agents for diagram generation.
-
-**Triggered by**: "Teach about X?" during a session.
-
-### Architect Agent
-
-Generates mermaid diagrams (C4 Component, Sequence, Flowchart) from ADR sections describing component interactions.
-
-**Triggered automatically** during the SHIP phase when sections describe services, databases, APIs, or data flows. Also spawned by the teacher agent when diagrams enhance concept explanations.
-
----
-
-## Output
-
-After completing a session, Arete produces cross-referenced documents in the `context/` directory:
-
-### Technical Track:
-
-- ADR (`context/exports/`): The decision record (Context, Decision, Consequences).
-- Plan (`context/plans/`): The implementation details (Steps, Configuration, Error Handling) with integrated **TDD verification blocks**.
-
-### Conceptual Track:
-
-- Outline (`context/exports/`): A structured outline for your presentation or writing.
-
-### Teachings (Any Track):
-
-- Teaching (`context/teachings/`): Deep-dive explanation of a concept, with diagrams. Generated via `/teach X`.
-
----
-
-## Cross-Platform Usage
-
-Arete follows the [Agent Skills specification](https://agentskills.io/specification), making it compatible with multiple agentic platforms.
-
-### OpenCode
-
-See [`.opencode/INSTALL.md`](.opencode/INSTALL.md) for detailed instructions.
-
-
-### GitHub Copilot
-
-See [`.github/INSTALL.md`](.github/INSTALL.md) for detailed instructions.
-
-### Codex
-
-See [`.codex/INSTALL.md`](.codex/INSTALL.md) for detailed instructions.
-
-**Note:** Codex uses [AGENTS.md](https://developers.openai.com/codex/guides/agents-md) for project guidance. Arete subagents are not available in Codex—only skills are supported.
-
-### Platform Feature Matrix
-
-| Feature | Claude Code | OpenCode | Copilot | Codex |
-|---------|-------------|----------|---------|-------|
-| Skills | ✓ | ✓ | ✓ | ✓ |
-| Agents | ✓ | ✓ (generated) | ✓ (generated) | ✗ |
-| Phase orchestration | ✓ | Manual | Manual | Manual |
-| Model routing | ✓ | ✗ | ✗ | ✗ |
-
----
+For problems with multiple independent dimensions ("redesign auth AND migrate the DB AND change the API"), Arete decomposes them into focused sub-sessions instead of trying to brainstorm everything at once.
 
 ## Contributing
 
-- **Found a bug or have an idea?** Open an issue on GitHub.
+Found a bug or have an idea? Open an issue.
 
-- **Want to add a domain?** Reference libraries live in `skills/*/references/`. Add a new `.md` file with domain-specific questions and heuristics.
+The structure is simple:
 
-- **Want to improve a phase?** Each phase is a skill in `skills/`. The `SKILL.md` file defines behavior, exit criteria, and response style.
+- Each phase is a skill in `skills/`. The `SKILL.md` defines behavior, exit criteria, and response style.
+- Domain references live in `skills/*/references/`. Add a new `.md` file with domain-specific questions and you've extended the system.
+- Agents have a canonical version in `agents/` — edit there, then run `./scripts/generate-agents.sh` to propagate.
 
-- **Want to modify an agent?** Edit the canonical version in `agents/`, then run `./scripts/generate-agents.sh`.
-
-PRs are more than welcome! Keep changes focused.
+PRs more than welcome. Keep changes focused.

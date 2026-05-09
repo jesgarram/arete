@@ -52,14 +52,24 @@ One assumption is enough. Pick the riskiest one.
 ### 6. Scope
 Probe until user defines boundaries: "What's NOT in scope?" / "Smallest valuable version?"
 
+### 7. Success (User Requirements)
+
+Probe until the user names *who* the work serves and *what they need to do* after. This is the **user requirements** thread that the Spec will assemble at SHIP. Apply the same primitive used for vague pain — refuse abstractions ("make it better," "improve UX," "be more reliable") and demand concrete user-facing outcomes.
+
+- "Who is the user here? Could be an end user, the team, an operator, an implementing agent."
+- "After this work, what should they be able to do that they can't do now?"
+- "What's the observable outcome — something you could point at and say 'yes, this user got what they needed'?"
+
+The user need not produce final acceptance criteria here — those sharpen in Stress. Ground produces *rough* user requirements: who, what, why. Stress produces *testable* AC against those requirements.
+
 ## Transition
 
-**Coverage**: Trigger, Pain, Stakes, Assumptions, and Scope answered with specifics
+**Coverage**: Trigger, Pain, Stakes, Assumptions, Scope, **and Success (user requirements)** answered with specifics
 **Saturation**: User repeats same pain points; no new dimensions emerging
 **Gate**: "Any pain points we haven't touched?"
 
 When criteria met → announce:
-> "Problem: [one sentence]. Cost of inaction: [one sentence]. Key assumption: [one sentence]. Ready to explore solutions?"
+> "Problem: [one sentence]. Cost of inaction: [one sentence]. Key assumption: [one sentence]. **User requirements: [one sentence — who, what they need to do].** Ready to explore solutions?"
 
 Then call `Skill(skill: "arete:explore")` to load the explore phase. Do NOT continue inline.
 

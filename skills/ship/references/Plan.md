@@ -8,7 +8,8 @@ The **how** of the decision. Saved to `context/plans/`.
 ---
 problem: "..."
 date: YYYY-MM-DD
-adr: "[problem-slug]-adr-YYYY-MM-DD.md"
+adr: "../designs/[problem-slug]-adr-YYYY-MM-DD.md"
+spec: "../specs/[problem-slug]-spec-YYYY-MM-DD.md"
 ---
 
 # Implementation Plan: [Title]
@@ -36,6 +37,7 @@ adr: "[problem-slug]-adr-YYYY-MM-DD.md"
 
 [Description]
 
+**Satisfies:** AC-1, AC-3
 **Verify:** [Command or check]
 **Expect:** [Outcome]
 **Depends on:** Task 1
@@ -48,9 +50,35 @@ adr: "[problem-slug]-adr-YYYY-MM-DD.md"
 | `### Task N:` | Yes | Task heading |
 | `**Files:**` | Yes | Files to create/modify |
 | Description | Yes | What to do |
+| `**Satisfies:**` | No | AC IDs from the Spec this task helps satisfy (e.g., `AC-1, AC-3`). Optional per-task; required at the AC level — see Asymmetric Coverage below. |
 | `**Verify:**` | Yes | Command (preferred) or natural language |
 | `**Expect:**` | Yes | Expected outcome |
 | `**Depends on:**` | No | Dependencies whose verification must pass first. Use for integration checks. |
+
+## Asymmetric Coverage Rule
+
+When a Spec accompanies the Plan, SHIP enforces **asymmetric coverage**:
+
+- **Every AC** in the Spec must be referenced by ≥ 1 task via `**Satisfies:** AC-N`, **and** that task's `**Verify:**` line must be an executable command (or a clearly-marked `[manual]` fallback).
+- **Tasks may exist without `Satisfies:`** — scaffolding, refactors, observability, or migration tasks that don't map to a single AC are allowed and should not carry forced annotations.
+
+The rule prevents *structural compliance* (an AC ID stamped on a task that doesn't actually verify it) from substituting for *semantic coverage*. AC IDs are carriers of testability, not bureaucracy.
+
+## Definition of Done
+
+End each Plan with a Definition of Done table mapping every AC to its covering task(s):
+
+```markdown
+## Definition of Done
+
+| AC | Verified by |
+|----|-------------|
+| AC-1 | Task 4 |
+| AC-2 | Task 4, Task 8 |
+| AC-3 | Task 6 |
+```
+
+This table is the receipt that the asymmetric coverage rule holds — every AC has at least one verifying task.
 
 ## Verification Philosophy
 

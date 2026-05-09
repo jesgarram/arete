@@ -1,36 +1,54 @@
 ---
 name: ship
-description: Generate retrievable artifacts from brainstorm sessions. Use after STRESS phase to create ADRs + Plans (technical) or Outlines (conceptual). Spawns parallel architect subagents to generate inline mermaid diagrams.
+description: Generate retrievable artifacts from brainstorm sessions. Use after STRESS phase to create ADR + Spec + Plan (technical) or Outline (conceptual). Spawns parallel architect subagents to generate inline mermaid diagrams.
 ---
 
 # Ship
 
 Transform brainstorm decisions into retrievable artifacts that serve as **boundary objects** — specific enough for engineers to implement from, clear enough for non-engineers to understand trade-offs.
 
+On the Technical track, SHIP produces **three artifacts** that together cover *why* (ADR), *what's true when done* (Spec), and *how* (Plan). The Spec is the testable definition of done; the Plan tasks reference Spec acceptance criteria via `Satisfies: AC-N`.
+
 ## Flow
 
-1. Detect track: Technical → ADR + Plan | Conceptual → Outline
-2. Detect domain: IaC → load [`references/tdd-iac.md`](references/tdd-iac.md)
-3. Generate documents from brainstorm content
-4. Identify sections with component interactions → spawn parallel architect subagents
-5. Inject returned mermaid inline (max 3 diagrams per doc)
-6. Add frontmatter (`problem:`, `date:`) and save
+1. Detect track: Technical → **ADR + Spec + Plan** (three artifacts) | Conceptual → Outline
+2. Ensure output directories exist: `mkdir -p context/designs context/specs context/plans` (Technical) or `mkdir -p context/exports` (Conceptual)
+3. Detect domain: IaC → load [`references/tdd-iac.md`](references/tdd-iac.md)
+4. Generate documents from brainstorm content (see per-track sections below)
+5. **Technical track only**: enforce AC ↔ Verify asymmetric coverage (see `## AC Coverage Enforcement` below) — block save until every AC is covered
+6. Identify sections with component interactions → spawn parallel architect subagents
+7. Inject returned mermaid inline (max 3 diagrams per doc)
+8. Add frontmatter (`problem:`, `date:`, cross-references) and save
 
 ## Output
 
 | Track | Document | Location | Naming |
 |-------|----------|----------|--------|
-| Technical | ADR | `context/exports/` | `[slug]-adr-YYYY-MM-DD.md` |
+| Technical | ADR | `context/designs/` | `[slug]-adr-YYYY-MM-DD.md` |
+| Technical | Spec | `context/specs/` | `[slug]-spec-YYYY-MM-DD.md` |
 | Technical | Plan | `context/plans/` | `[slug]-plan-YYYY-MM-DD.md` |
 | Conceptual | Outline | `context/exports/` | `[slug]-outline-YYYY-MM-DD.md` |
 
-Technical ADR + Plan cross-reference each other via frontmatter.
+The three Technical artifacts cross-reference each other via frontmatter (`adr:`, `spec:`, `plan:`).
 
 ## Templates
 
-- **ADR**: [`references/ADR.md`](references/ADR.md) - the why and what
-- **Plan**: [`references/Plan.md`](references/Plan.md) - the how
-- **Outline**: [`references/Outline.md`](references/Outline.md) - conceptual track
+- **ADR**: [`references/ADR.md`](references/ADR.md) — the why and what
+- **Spec**: [`references/Spec.md`](references/Spec.md) — the testable definition of done
+- **Plan**: [`references/Plan.md`](references/Plan.md) — the how
+- **Outline**: [`references/Outline.md`](references/Outline.md) — conceptual track
+
+## Spec Generation (Technical Track)
+
+The Spec is assembled from the brainstorm transcript. It is not a running document maintained during the conversation — Stress's AC checkpoint produces the quotable AC list; SHIP transcribes them into the template along with content from other phases.
+
+| Spec section | Source phase |
+|--------------|--------------|
+| User Requirements | **Ground** — the Success thread (who, what they need to do, why) |
+| Acceptance Criteria | **Stress** — the confirmed AC from the AC checkpoint |
+| Non-Functional Requirements | **Decide** (NFR column of the matrix) and **Stress** (failure modes that surfaced as constraints) |
+
+Each AC must include a `*Verifiable by*:` line — an executable check (preferred) or a `[manual]` inspection step. Carry the AC IDs (AC-1, AC-2, …) verbatim from the checkpoint into both the Spec and the Plan's `Satisfies:` references.
 
 ## Domain Detection (Progressive Disclosure)
 
@@ -64,9 +82,19 @@ Each implementation task MUST include verification:
 ### Verification Guidelines
 
 1. **Prefer commands** - Use executable verification commands when possible
-2. **Natural language fallback** - Acceptable when commands not feasible
+2. **Natural language fallback** - Acceptable when commands not feasible — mark with `[manual]`
 3. **Cross-component tests** - Attach to later component, set dependencies
-4. **Definition of Done** - Consolidate all verifications in final section
+4. **Definition of Done** - Consolidate all verifications in final section, with the AC → task table from `references/Plan.md`
+
+## AC Coverage Enforcement (Technical Track)
+
+After generating the Plan, run the **asymmetric coverage check** before saving:
+
+- For **every** AC in the Spec, confirm at least one Plan task carries `**Satisfies:** AC-N` AND that task's `**Verify:**` line is an executable command (or a clearly-marked `[manual]` fallback). This is the AC → tasks direction.
+- Tasks **without** `Satisfies:` are allowed (scaffolding, refactors, observability). The reverse direction is intentionally not enforced — that's the asymmetry.
+- If any AC has no covering task, **surface the gap** to the user. Three resolutions: (a) add a task that satisfies it, (b) mark the AC as deferred (move to a follow-up section in the Spec), or (c) remove the AC from the Spec. Do not save the artifacts until the gap is resolved.
+
+The asymmetry guards against *structural compliance ≠ semantic coverage*: stamping `Satisfies: AC-3` on a task whose `Verify:` doesn't actually exercise AC-3. Requiring an executable `Verify:` on the satisfying task is what makes AC IDs carriers of testability rather than theater.
 
 ### IaC-Specific Verifications
 
