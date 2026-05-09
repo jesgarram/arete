@@ -35,7 +35,7 @@ Five phases, each a skill. They run in order. If stress-testing finds gaps, you 
 
 **Decide.** Converge. Forces a trade-off matrix — effort, risk, reversibility, NFRs. Reversibility is the most undervalued axis in tech decisions, of course, so it's always there. The decision is a provisional bet, not a marriage.
 
-**Stress.** The grind. Pre-mortem ("it's six months from now and this failed — walk me through what went wrong"), challenge every claim from explore and decide, and on the technical track, sharpen rough user requirements into testable acceptance criteria. Trip-wire: an AC is good enough when you could write a `Verify:` command for it. Past that point you're spiralling.
+**Stress.** The grind. Challenge every claim from explore and decide, and on the technical track, sharpen rough user requirements into testable acceptance criteria. Trip-wire: an AC is good enough when you could write a `Verify:` command for it. Past that point you're spiralling.
 
 **Ship.** Output the artifacts (see below).
 

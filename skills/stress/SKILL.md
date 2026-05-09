@@ -85,23 +85,10 @@ Stress is where rough user requirements from Ground sharpen into **testable acce
 
 If you've probed an AC twice and it's still vague, flag it as rough and carry it into the AC checkpoint (step 7), which is the gate that resolves it. Don't spiral here.
 
-### 5. Pre-Mortem
-
-Use prospective hindsight (30% more effective than generic "what if" questions):
-
-"It's 6 months from now and this failed. Walk me through what went wrong."
-
-Then probe the top 2-3 failure reasons the user names:
-- "What signal would you see NOW if that failure was coming?"
-- "Is that within your control to prevent?"
-
-**Technical:** Focus on operational failures (3 AM debugging, data loss, cascading failures, blast radius).
-**Conceptual:** Focus on audience/stakeholder failures (message didn't land, wrong audience, resistance you didn't anticipate).
-
-### 6. Polish Loop
+### 5. Polish Loop
 Push for simpler, more robust, more elegant. When all pass: "Production-ready."
 
-### 7. AC Checkpoint (Technical track only — precondition for Ship)
+### 6. AC Checkpoint (Technical track only — precondition for Ship)
 
 Before transitioning to Ship, run the **AC checkpoint**. This is the single most important moment for spec quality: AC become first-class quotable items *before* SHIP touches the transcript.
 
