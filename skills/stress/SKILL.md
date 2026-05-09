@@ -73,7 +73,21 @@ Challenge answers given during explore and decide phases. Don't re-ask what was 
 
 Load domain questions from reference file as additional challenges, **one at a time**. Enforce specifics — no "it depends."
 
-### 4. Pre-Mortem
+### 4. Acceptance Criteria probing (Technical track)
+
+Stress is where rough user requirements from Ground sharpen into **testable acceptance criteria**. As the user articulates what they expect to be true when done, refuse vague forms — apply the same primitive Ground uses for vague pain.
+
+- Reject "X works" / "Y is reliable" / "Z is fast." These are not testable.
+- Demand observable, testable conditions: "Define 'works' as something I could write a `Verify:` command for."
+- Push for the form: *given [context], the system [observable behavior], measured by [check]*.
+
+**Trip-wire — when to stop probing:** an AC is good enough when **a `Verify:` command could be written against it**. Same testability primitive Ship enforces at the Plan level. Don't keep probing past testability — diminishing returns and brainstorm fatigue.
+
+If you've probed an AC twice and it's still vague, accept "rough AC" with a flag and let SHIP's AC checkpoint catch any remaining gaps. Don't spiral.
+
+This step does not exist for the Conceptual track — Outlines have no AC machinery.
+
+### 5. Pre-Mortem
 
 Use prospective hindsight (30% more effective than generic "what if" questions):
 
@@ -86,8 +100,23 @@ Then probe the top 2-3 failure reasons the user names:
 **Technical:** Focus on operational failures (3 AM debugging, data loss, cascading failures, blast radius).
 **Conceptual:** Focus on audience/stakeholder failures (message didn't land, wrong audience, resistance you didn't anticipate).
 
-### 5. Polish Loop
-Push for simpler, more robust, more elegant. When all pass: "Production-ready. Ship it."
+### 6. Polish Loop
+Push for simpler, more robust, more elegant. When all pass: "Production-ready."
+
+### 7. AC Checkpoint (Technical track only — precondition for Ship)
+
+Before transitioning to Ship, run the **AC checkpoint**. This is the single most important moment for spec quality: AC become first-class quotable items *before* SHIP touches the transcript.
+
+1. Mine candidate acceptance criteria from the conversation. Look for: testable conditions the user articulated, the Stress probing answers, and any "I'd ship this if..." statements.
+2. Present the candidate list to the user, one AC at a time or as a numbered list:
+   > "Here are the candidate acceptance criteria I've mined. Confirm, edit, or remove each:
+   > - AC-1: [statement] — *verifiable by* [check]
+   > - AC-2: [statement] — *verifiable by* [check]
+   > ..."
+3. The user confirms each, edits any that are off, and adds any that were missed.
+4. Each confirmed AC must pass the testability trip-wire (a `Verify:` command could be written). If one slips through vague, loop back to step 1 of probing for that AC.
+
+**Failure mode if checkpoint is skipped:** SHIP must mine AC from raw transcript with no human in the loop. Result: AC are missed, bloated, or invented. The whole spec ↔ plan linkage breaks down silently. Do not transition to Ship without the checkpoint.
 
 ## Past Decisions
 
@@ -117,5 +146,6 @@ Do NOT push through to Ship with known unresolved gaps. Looping back is a sign o
 **Coverage**: Key failure modes probed
 **Saturation**: "What if..." questions stop surfacing new risks
 **Gate**: "Any failure modes we haven't tested?"
+**AC Checkpoint** (Technical track only): the AC checkpoint must pass before transition — every confirmed AC must be testable. This is a hard precondition.
 
 When criteria met → announce gate → user confirms → call `Skill(skill: "arete:ship")` to load the ship phase. Do NOT continue inline.

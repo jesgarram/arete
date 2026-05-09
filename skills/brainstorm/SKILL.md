@@ -58,7 +58,9 @@ Example: `[GROUND → EXPLORE] Problem grounded. Exploring solutions...`
 
 1. **Call `Skill(skill: "arete:ground")`** - Ensure problem is understood before exploring
 2. **Detect track** - Technical or Conceptual (ask if unclear)
-3. **Set success criteria** - "Session ends when we have: [X]"
+3. **Set success criteria**:
+   - **Technical**: "Session ends when SHIP produces three artifacts — ADR (the why and what), Spec (the testable definition of done), and Plan (the how) — with every Spec acceptance criterion covered by at least one Plan task carrying an executable `Verify:` command."
+   - **Conceptual**: "Session ends when SHIP produces an Outline ready to drive a talk, blog post, or stakeholder conversation."
 
 ## Pacing (Anti-Overwhelm)
 
